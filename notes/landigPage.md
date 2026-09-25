@@ -10,8 +10,8 @@ Surface: #FFCCD5
 Text: #590D22
 
 ## Typography
-Heading font:
-Body font:
+Heading font: Ancient Medium
+Body font: Spicy Kebab
 
 ## Components
 Buttons:
@@ -23,7 +23,5 @@ Forms:
 ## General style
 Modern
 Clean
-Professional
 Human-made
 Responsive
-No generic AI/SaaS aesthetic

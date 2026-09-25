@@ -1,11 +1,15 @@
 :root{
     --primary-color: #800F2F;
     --secondary-color: #A4133C;
+
     --accent-color: #FF4D6D;
     --background-color: #FFF0F3;
+
     --surface-color: #FFCCD5;
     --text-color: #590D22;
-    --font-family: "Ancient Medium", sans-serif;
+    
+    --heading-font: "Ancient Medium", sans-serif;
+    --body-font: "Spicy Kebab", sans-serif;
 }
 
 @font-face {
@@ -13,4 +17,23 @@
     src: url("./fonts/Ancient Medium.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
+}
+
+@font-face {
+    font-family: "Spicy Kebab";
+    src: url("./fonts/Spicy Kebab.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1{
+    font-family: var(--heading-font);
+    color: var(--primary-color);
+    font-size: 3rem;
+}
+
+header{
+    background: var(--primary-color);
+    padding: 1rem;
+    text-align: center;
 }
