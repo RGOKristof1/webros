@@ -14,21 +14,21 @@
 
 @font-face {
     font-family: "Ancient Medium";
-    src: url("./fonts/Ancient Medium.ttf") format("truetype");
+    src: url("../fonts/Ancient Medium.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Spicy Kebab";
-    src: url("./fonts/Spicy Kebab.ttf") format("truetype");
+    src: url("../fonts/Spicy Kebab.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
 h1{
     font-family: var(--heading-font);
-    color: var(--primary-color);
+    color: var(--background-color);
     font-size: 3rem;
 }
 
@@ -36,4 +36,11 @@ header{
     background: var(--primary-color);
     padding: 1rem;
     text-align: center;
+}
+
+body {
+    margin: 0;
+    background: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--body-font);
 }
