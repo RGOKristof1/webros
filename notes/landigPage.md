@@ -13,13 +13,6 @@ Text: #590D22
 Heading font: Ancient Medium
 Body font: Spicy Kebab
 
-## Components
-Buttons:
-Cards:
-Navbar:
-Footer:
-Forms:
-
 ## General style
 Modern
 Clean
