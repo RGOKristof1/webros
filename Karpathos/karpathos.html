@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karpathos — Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-shell">
+
+        <header class="mobile-header">
+            <div class="brand brand-small">
+                <div class="brand-mark">K</div>
+                <div>
+                    <h1>Karpathos</h1>
+                    <p>School schedule</p>
+                </div>
+            </div>
+
+            <span id="mobileTeamBadge" class="team-badge">Team A</span>
+        </header>
+
+        <main class="dashboard">
+
+            <!-- SETTINGS -->
+            <aside class="settings-panel panel">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Settings</p>
+                        <h2>Preferences</h2>
+                    </div>
+                    <span id="teamBadge" class="team-badge">Team A</span>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Appearance</h3>
+
+                    <div class="theme-switcher" aria-label="Theme selection">
+                        <button
+                            id="lightTheme"
+                            class="theme-button"
+                            type="button"
+                            data-theme="light"
+                        >
+                            <span>☀</span>
+                            Light
+                        </button>
+
+                        <button
+                            id="darkTheme"
+                            class="theme-button"
+                            type="button"
+                            data-theme="dark"
+                        >
+                            <span>☾</span>
+                            Dark
+                        </button>
+                    </div>
+                </div>
+
+                <div class="settings-section average-section">
+                    <div class="section-title-row">
+                        <div>
+                            <h3>Average Calculator</h3>
+                            <p>Add your grades to calculate an average.</p>
+                        </div>
+                        <span id="averageValue" class="average-value">—</span>
+                    </div>
+
+                    <div id="gradesList" class="grades-list"></div>
+
+                    <button id="addGradeButton" class="secondary-button" type="button">
+                        <span>+</span>
+                        Add grade
+                    </button>
+                </div>
+
+                <div class="settings-bottom">
+                    <button id="logoutButton" class="logout-button" type="button">
+                        <span>↪</span>
+                        Logout
+                    </button>
+                </div>
+            </aside>
+
+            <!-- TIMER -->
+            <section class="timer-panel panel">
+                <div class="timer-topbar">
+                    <div>
+                        <p id="todayLabel" class="eyebrow">Monday</p>
+                        <p id="dateLabel" class="date-label">October 5, 2026</p>
+                    </div>
+
+                    <div class="live-indicator">
+                        <span></span>
+                        Live
+                    </div>
+                </div>
+
+                <div class="timer-content">
+                    <div id="timerStatus" class="timer-status">
+                        Before school
+                    </div>
+
+                    <div class="next-lesson">
+                        <span id="lessonContext" class="context-label">Next lesson</span>
+                        <h2 id="lessonName">Mathematics</h2>
+                        <p id="lessonDetails">Room 204</p>
+                    </div>
+
+                    <div id="countdown" class="countdown" aria-live="polite">
+                        00:00:00
+                    </div>
+
+                    <div class="current-time">
+                        <span id="currentTime">00:00:00</span>
+                    </div>
+
+                    <div class="timer-description" id="timerDescription">
+                        Until the next lesson
+                    </div>
+                </div>
+
+                <div class="timer-footer">
+                    <div class="footer-stat">
+                        <span class="footer-label">Team</span>
+                        <strong id="footerTeam">A</strong>
+                    </div>
+
+                    <div class="footer-divider"></div>
+
+                    <div class="footer-stat">
+                        <span class="footer-label">Day</span>
+                        <strong id="footerDay">MON</strong>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SCHEDULE -->
+            <section class="schedule-panel panel">
+                <div class="schedule-header">
+                    <div>
+                        <p class="eyebrow">Timetable</p>
+                        <h2>Daily schedule</h2>
+                    </div>
+                </div>
+
+                <nav id="daySelector" class="day-selector" aria-label="Select day">
+                    <button type="button" data-day="monday">MON</button>
+                    <button type="button" data-day="tuesday">TUE</button>
+                    <button type="button" data-day="wednesday">WED</button>
+                    <button type="button" data-day="thursday">THU</button>
+                    <button type="button" data-day="friday">FRI</button>
+                </nav>
+
+                <div class="schedule-date">
+                    <span id="selectedDayName">Monday</span>
+                    <span id="selectedDayDate"></span>
+                </div>
+
+                <div id="scheduleList" class="schedule-list">
+                    <!-- Schedule entries are generated by JavaScript. -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

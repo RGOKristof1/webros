@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karpathos — Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-page">
+
+    <main class="login-container">
+        <section class="login-card" aria-labelledby="login-title">
+            <div class="brand">
+                <div class="brand-mark">K</div>
+                <div>
+                    <h1 id="login-title">Karpathos</h1>
+                    <p>School schedule</p>
+                </div>
+            </div>
+
+            <div class="login-heading">
+                <h2>Welcome back</h2>
+                <p>Select your team and enter your password.</p>
+            </div>
+
+            <form id="loginForm" novalidate>
+                <fieldset class="team-selector">
+                    <legend>Team</legend>
+
+                    <label class="team-option">
+                        <input type="radio" name="team" value="A" checked>
+                        <span>Team A</span>
+                    </label>
+
+                    <label class="team-option">
+                        <input type="radio" name="team" value="B">
+                        <span>Team B</span>
+                    </label>
+                </fieldset>
+
+                <div class="form-field">
+                    <label for="password">Password</label>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        inputmode="numeric"
+                        autocomplete="current-password"
+                        placeholder="Enter password"
+                        maxlength="2"
+                        required
+                    >
+                </div>
+
+                <p id="loginError" class="error-message" role="alert"></p>
+
+                <button class="primary-button login-button" type="submit">
+                    Login
+                    <span aria-hidden="true">→</span>
+                </button>
+            </form>
+
+            <p class="login-footer">Karpathos School Management</p>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
