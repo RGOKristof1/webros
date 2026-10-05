@@ -48,7 +48,7 @@
                 end: "09:40",
                 subject: "Szoftvertesztelés",
                 room: "207",
-                teacher: "Bell Ringer"
+                teacher: "Harangozó"
             },
             {
                 start: "09:40",
@@ -61,7 +61,7 @@
                 end: "10:40",
                 subject: "Szoftvertesztelés",
                 room: "207",
-                teacher: "Bell Ringer"
+                teacher: "Harangozó"
             },
             {
                 start: "10:30",
@@ -74,7 +74,7 @@
                 end: "11:35",
                 subject: "IKT",
                 room: "207",
-                teacher: "Bell Ringer"
+                teacher: "Harangozó"
             },
             {
                 start: "11:35",
@@ -87,7 +87,7 @@
                 end: "12:30",
                 subject: "IKT",
                 room: "207",
-                teacher: "Bell Ringer"
+                teacher: "Harangozó"
             },
             {
                 start: "12:30",
@@ -100,7 +100,7 @@
                 end: "13:40",
                 subject: "IKT",
                 room: "207",
-                teacher: "Bell Ringer"
+                teacher: "Harangozó"
             },
             {
                 start: "13:40",
