@@ -34,7 +34,7 @@
                 start: "08:00",
                 end: "08:45",
                 subject: "Bio Info",
-                room: "111",
+                room: "KTT",
                 teacher: "BBeus"
             },
             {
@@ -222,9 +222,9 @@
             {
                 start: "08:00",
                 end: "08:45",
-                subject: "History",
-                room: "202",
-                teacher: "Emma Davis"
+                subject: "Emelt Matek",
+                room: "127",
+                teacher: "Pálfi"
             },
             {
                 start: "08:45",
@@ -235,25 +235,25 @@
             {
                 start: "08:55",
                 end: "09:40",
-                subject: "Chemistry",
-                room: "303",
-                teacher: "Peter Wilson"
+                subject: "Emelt Matek",
+                room: "127",
+                teacher: "Pálfi"
             },
             {
                 start: "09:40",
-                end: "09:50",
+                end: "09:55",
                 type: "break",
                 label: "BREAK"
             },
             {
-                start: "09:50",
-                end: "10:35",
-                subject: "English",
-                room: "105",
-                teacher: "John Brown"
+                start: "09:55",
+                end: "10:40",
+                subject: "Állampolgari",
+                room: "101",
+                teacher: "Zeke"
             },
             {
-                start: "10:35",
+                start: "10:30",
                 end: "10:50",
                 type: "break",
                 label: "BREAK"
@@ -261,9 +261,61 @@
             {
                 start: "10:50",
                 end: "11:35",
-                subject: "Mathematics",
-                room: "204",
-                teacher: "Anna Smith"
+                subject: "Matek",
+                room: "103",
+                teacher: "Teczár"
+            },
+            {
+                start: "11:35",
+                end: "11:45",
+                type: "break",
+                label: "BREAK"
+            },
+            {
+                start: "11:45",
+                end: "12:30",
+                subject: "Irodalom",
+                room: "101",
+                teacher: "Szümegi"
+            },
+            {
+                start: "12:30",
+                end: "12:55",
+                type: "break",
+                label: "BREAK"
+            },
+            {
+                start: "12:55",
+                end: "13:40",
+                subject: "Irodalom",
+                room: "101",
+                teacher: "Szümegi"
+            },
+            {
+                start: "13:40",
+                end: "13:50",
+                type: "break",
+                label: "BREAK"
+            },
+            {
+                start: "13:50",
+                end: "14:35",
+                subject: "Tesi",
+                room: "Janza",
+                teacher: "Puskás"
+            },
+            {
+                start: "14:35",
+                end: "14:40",
+                type: "break",
+                label: "BREAK"
+            },
+            {
+                start: "14:40",
+                end: "15:25",
+                subject: "Matek",
+                room: "103",
+                teacher: "Teczár"
             }
         ],
 
@@ -271,9 +323,9 @@
             {
                 start: "08:00",
                 end: "08:45",
-                subject: "Computer Science",
-                room: "Lab 1",
-                teacher: "Michael Taylor"
+                subject: "Webprog",
+                room: "207",
+                teacher: "Dufka"
             },
             {
                 start: "08:45",
@@ -284,25 +336,25 @@
             {
                 start: "08:55",
                 end: "09:40",
-                subject: "Mathematics",
-                room: "204",
-                teacher: "Anna Smith"
+                subject: "Webprog",
+                room: "207",
+                teacher: "Dufka"
             },
             {
                 start: "09:40",
-                end: "09:50",
+                end: "09:55",
                 type: "break",
                 label: "BREAK"
             },
             {
-                start: "09:50",
-                end: "10:35",
-                subject: "Art",
-                room: "110",
-                teacher: "Sophie Clark"
+                start: "09:55",
+                end: "10:40",
+                subject: "Suck My",
+                room: "Fizika",
+                teacher: "Botos"
             },
             {
-                start: "10:35",
+                start: "10:30",
                 end: "10:50",
                 type: "break",
                 label: "BREAK"
@@ -310,9 +362,48 @@
             {
                 start: "10:50",
                 end: "11:35",
-                subject: "Physics",
-                room: "301",
-                teacher: "Peter Wilson"
+                subject: "Suck My",
+                room: "Fizika",
+                teacher: "Botos"
+            },
+            {
+                start: "11:35",
+                end: "11:45",
+                type: "break",
+                label: "BREAK"
+            },
+            {
+                start: "11:45",
+                end: "12:30",
+                subject: "Asztali",
+                room: "212",
+                teacher: "Harangozó"
+            },
+            {
+                start: "12:30",
+                end: "12:55",
+                type: "break",
+                label: "BREAK"
+            },
+            {
+                start: "12:55",
+                end: "13:40",
+                subject: "Asztali",
+                room: "212",
+                teacher: "Harangozó"
+            },
+            {
+                start: "13:40",
+                end: "13:50",
+                type: "break",
+                label: "BREAK"
+            },
+            {
+                start: "13:50",
+                end: "14:35",
+                subject: "Asztali",
+                room: "212",
+                teacher: "Harangozó"
             }
         ],
 
