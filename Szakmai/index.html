@@ -1,41 +1,189 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>webros.hu</title>
-    <link rel="stylesheet" href="css/style.css?v=20260926">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="css/style.css?v=20261012">
 </head>
 <body>
-    <header>
-        <a href="index.html">
-            <img src="img/joeyy.jpg" alt="UTALOM A CIA" class="logo">
-            <span class="home">webros.hu</span>
-        </a>  
-        <nav>
+    <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+
+    <header class="site-header">
+        <a class="brand" href="#top" aria-label="webros.hu">
+            <img src="img/joeyy.jpg" alt="" class="logo">
+            <span class="home" data-info="name">webros.hu</span>
+        </a>
+
+        <nav aria-label="Main">
             <ul>
-                <li><a href="">Étlap</a></li>
-                <li><a href="">Asztalfoglalás</a></li>
-                <li><a href="">Rólunk</a></li>
-                <li><a href="">Kapcsolat</a></li>
+                <li><a href="#menu" data-i18n="nav.menu">Menu</a></li>
+                <li><a href="#reservation" data-i18n="nav.reservation">Reservation</a></li>
+                <li><a href="#about" data-i18n="nav.about">About us</a></li>
+                <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
             </ul>
         </nav>
+
+        <div class="lang-switch" role="group" aria-label="Language">
+            <button type="button" data-lang="en" aria-pressed="true">EN</button>
+            <button type="button" data-lang="hu" aria-pressed="false">HU</button>
+        </div>
     </header>
-    <main>
-        <section class="hero" aria-label="Főoldal">
+
+    <main id="main">
+        <section class="hero" id="top" aria-labelledby="hero-title">
             <div class="hero-content">
-                <p class="hero-eyebrow">Lorem ipsum dolor sit amet.</p>
-                <h1 class="hero-title">Árvíztűrő tükörfúrógép</h1>
-                <p class="hero-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <a href="#" class="hero-button">Asztalt foglalok</a>
+                <p class="hero-eyebrow" data-i18n="hero.eyebrow"></p>
+                <h1 class="hero-title" id="hero-title" data-i18n="hero.title"></h1>
+                <p class="hero-description" data-i18n="hero.description"></p>
+                <a href="#reservation" class="hero-button" data-i18n="hero.button"></a>
             </div>
-            <div class="hero-image">
-                <img src="img/joeyy.jpg" alt="Hero Image">
+            <figure class="hero-image">
+                <img src="img/joeyy.jpg" alt="" data-i18n-attr="alt:hero.imageAlt">
+            </figure>
+        </section>
+
+        <section class="section" id="menu" aria-labelledby="menu-title">
+            <header class="section-head">
+                <h2 id="menu-title" data-i18n="menu.title"></h2>
+                <p data-i18n="menu.intro"></p>
+            </header>
+            <div class="menu-grid" id="menu-list"><!-- rendered from content.js --></div>
+        </section>
+
+        <section class="section section-surface" id="reservation" aria-labelledby="reservation-title">
+            <header class="section-head">
+                <h2 id="reservation-title" data-i18n="reservation.title"></h2>
+                <p data-i18n="reservation.intro"></p>
+            </header>
+
+            <form class="booking" id="reservation-form">
+                <div class="booking-steps">
+                    <fieldset class="step">
+                        <legend data-i18n="reservation.steps.guests"></legend>
+                        <div class="stepper">
+                            <button type="button" id="guests-minus" data-i18n-attr="aria-label:reservation.guestsMinus">&minus;</button>
+                            <output id="guests-out" for="guests" aria-live="polite"></output>
+                            <button type="button" id="guests-plus" data-i18n-attr="aria-label:reservation.guestsPlus">+</button>
+                            <input type="hidden" id="guests" name="guests">
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="step">
+                        <legend data-i18n="reservation.steps.date"></legend>
+                        <div class="chips" id="date-quick"><!-- Today / Tomorrow chips --></div>
+                        <label class="date-other">
+                            <span data-i18n="reservation.otherDate"></span>
+                            <input type="date" id="r-date" name="date" required>
+                        </label>
+                    </fieldset>
+
+                    <fieldset class="step step-wide">
+                        <legend data-i18n="reservation.steps.time"></legend>
+                        <div id="time-slots"><!-- rendered --></div>
+                    </fieldset>
+
+                    <fieldset class="step step-wide">
+                        <legend data-i18n="reservation.steps.seating"></legend>
+                        <div class="cards" id="seating"><!-- rendered --></div>
+                    </fieldset>
+
+                    <fieldset class="step">
+                        <legend data-i18n="reservation.steps.occasion"></legend>
+                        <select id="r-occasion" name="occasion"></select>
+                    </fieldset>
+
+                    <fieldset class="step step-wide contact-fields">
+                        <legend data-i18n="reservation.steps.contact"></legend>
+                        <div class="field">
+                            <label for="r-name" data-i18n="reservation.fields.name"></label>
+                            <input id="r-name" name="name" type="text" autocomplete="name" required>
+                        </div>
+                        <div class="field">
+                            <label for="r-email" data-i18n="reservation.fields.email"></label>
+                            <input id="r-email" name="email" type="email" autocomplete="email" required>
+                        </div>
+                        <div class="field">
+                            <label for="r-phone" data-i18n="reservation.fields.phone"></label>
+                            <input id="r-phone" name="phone" type="tel" autocomplete="tel" required>
+                        </div>
+                        <div class="field field-wide">
+                            <label for="r-message" data-i18n="reservation.fields.message"></label>
+                            <textarea id="r-message" name="message" rows="2"></textarea>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <aside class="booking-summary" aria-labelledby="summary-title">
+                    <h3 id="summary-title" data-i18n="reservation.summary"></h3>
+                    <dl id="summary"><!-- live summary --></dl>
+                    <button type="submit" class="hero-button" data-i18n="reservation.submit"></button>
+                    <p class="form-note" data-i18n="reservation.note"></p>
+                </aside>
+            </form>
+        </section>
+
+        <section class="section" id="about" aria-labelledby="about-title">
+            <header class="section-head">
+                <h2 id="about-title" data-i18n="about.title"></h2>
+            </header>
+            <div class="about-text" id="about-text"><!-- rendered --></div>
+            <ul class="values" id="about-values"><!-- rendered --></ul>
+        </section>
+
+        <section class="section section-surface" id="contact" aria-labelledby="contact-title">
+            <header class="section-head">
+                <h2 id="contact-title" data-i18n="contact.title"></h2>
+                <p data-i18n="contact.intro"></p>
+            </header>
+            <div class="contact-grid">
+                <address>
+                    <h3 data-i18n="contact.addressLabel"></h3>
+                    <p><span data-i18n="contact.address"></span><br>
+                       <a data-map data-i18n="contact.mapLink"></a></p>
+                    <h3 data-i18n="contact.phoneLabel"></h3>
+                    <p><a data-info-link="phone"></a></p>
+                    <h3 data-i18n="contact.emailLabel"></h3>
+                    <p><a data-info-link="email"></a></p>
+                </address>
+                <div>
+                    <h3 data-i18n="contact.hoursLabel"></h3>
+                    <dl class="hours" id="hours"><!-- rendered --></dl>
+                </div>
             </div>
-
-
-
         </section>
     </main>
+
+    <footer class="site-footer">
+        <p>&copy; <span id="year"></span> <span data-info="name"></span>. <span data-i18n="footer.rights"></span></p>
+        <ul class="social" id="social"></ul>
+        <a href="#top" data-i18n="footer.backToTop"></a>
+    </footer>
+
+    <dialog class="dish-dialog" id="dish-dialog" aria-labelledby="dish-title">
+        <button type="button" class="dish-close" id="dish-close">&times;</button>
+        <img class="dish-photo" id="dish-photo" alt="">
+        <div class="dish-body">
+            <h3 id="dish-title"></h3>
+            <p class="dish-price" id="dish-price"></p>
+            <p id="dish-desc"></p>
+
+            <h4 data-i18n="dish.energy"></h4>
+            <p class="dish-kcal"><strong id="dish-kcal"></strong> <span data-i18n="dish.kcal"></span>
+               <small data-i18n="dish.perPortion"></small></p>
+
+            <h4 data-i18n="dish.macros"></h4>
+            <div class="macro-bar" id="macro-bar" aria-hidden="true"></div>
+            <ul class="macro-list" id="macro-list"></ul>
+
+            <h4 data-i18n="dish.allergens"></h4>
+            <ul class="allergens" id="dish-allergens"></ul>
+            <p class="dish-note" data-i18n="dish.allergenNote"></p>
+        </div>
+    </dialog>
+
+    <script src="js/content.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
