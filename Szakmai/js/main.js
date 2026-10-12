@@ -29,6 +29,7 @@
     document.querySelectorAll("[data-i18n-attr]").forEach(function (n) {
       n.dataset.i18nAttr.split(";").forEach(function (pair) { var p = pair.split(":"), v = get(t, p[1]); if (v != null) n.setAttribute(p[0], v); });
     });
+    document.querySelectorAll(".brand").forEach(function (a) { a.href = info.website; });
     document.querySelectorAll("[data-info]").forEach(function (n) { n.textContent = info[n.dataset.info]; });
     document.querySelectorAll("[data-info-link]").forEach(function (n) {
       var k = n.dataset.infoLink; n.textContent = info[k];

@@ -9,6 +9,7 @@ window.SITE = {
   /* ---------- 1. Language-independent info ---------- */
   info: {
     name: "webros.hu",
+    website: "https://webros.hu",              // the logo / name in the top bar links here
     phone: "+36 00 000 0000",
     email: "hello@webros.hu",
     reservationEmail: "foglalas@webros.hu",   // reservations are sent here (mailto)

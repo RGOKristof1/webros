@@ -160,8 +160,8 @@ nav a:focus-visible {
 .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
 .menu-items { list-style: none; margin: 0; padding: 0; }
 .menu-item { padding: .8rem 0; border-bottom: 1px dashed rgb(89 13 34 / 25%); }
-.menu-item-head { display: flex; justify-content: space-between; gap: 1rem; color: var(--primary-color); }
-.menu-item-price { white-space: nowrap; color: var(--secondary-color); }
+.menu-item-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; column-gap: 1rem; color: var(--primary-color); }
+.menu-item-price { white-space: nowrap; text-align: right; color: var(--secondary-color); }
 .menu-item-desc { margin: .25rem 0 0; font-size: .95rem; }
 
 /* Reservation form */
@@ -215,7 +215,7 @@ address p { margin: 0 0 1.2rem; }
 .menu-item:focus-visible { outline: 3px solid var(--primary-color); box-shadow: 0 0 0 6px var(--background-color); outline-offset: -2px; }
 .menu-thumb { width: 64px; height: 64px; flex: none; object-fit: cover; border-radius: .6rem; background: var(--surface-color); }
 .menu-item-text { flex: 1; min-width: 0; display: block; }
-.menu-item-head { display: flex; justify-content: space-between; gap: 1rem; color: var(--primary-color); }
+.menu-item-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; column-gap: 1rem; color: var(--primary-color); }
 .menu-item-desc { display: block; margin-top: .2rem; font-size: .95rem; }
 .menu-items li { list-style: none; }
 
@@ -355,8 +355,7 @@ nav a { display: inline-block; padding: .6rem .2rem; }
 .chip:has(input:disabled), .chip input:disabled { cursor: not-allowed; }
 .hero-button { min-height: 2.75rem; }
 .site-footer a, .section a { padding: .3rem 0; display: inline-block; }
-.menu-item-head { flex-wrap: wrap; }
-.menu-item-name { overflow-wrap: anywhere; }
+.menu-item-name { min-width: 0; overflow-wrap: break-word; hyphens: auto; }
 .dish-dialog { max-height: 92vh; max-height: 92dvh; }
 .dish-close { width: 2.75rem; height: 2.75rem; }
 img { max-width: 100%; }
