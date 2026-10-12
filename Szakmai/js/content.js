@@ -38,32 +38,40 @@ window.SITE = {
        protein / carbs / fat : grams per portion
        allergens : any of  gluten crustaceans eggs fish peanuts soy milk nuts
                    celery mustard sesame sulphites lupin molluscs   ( [] = none )
+     Nutrition is per portion and is an ESTIMATE from typical portion sizes -
+     replace it with the values for your own recipes and portions.
      To add a dish copy a { ... } block; to add a category copy a whole
      { category: ..., dishes: [...] } block.                                  */
   menu: [
     { category: { en: "Starters", hu: "Előételek" }, dishes: [
-      { image: "", price: 2500, kcal: 220, protein: 8, carbs: 24, fat: 10, allergens: ["gluten", "milk"],
-        name: { en: "Dish name", hu: "Étel neve" },
-        description: { en: "Short description, ingredients.", hu: "Rövid leírás, összetevők." } },
-      { image: "", price: 2800, kcal: 180, protein: 12, carbs: 6, fat: 11, allergens: ["eggs", "fish"],
-        name: { en: "Dish name", hu: "Étel neve" },
-        description: { en: "Short description, ingredients.", hu: "Rövid leírás, összetevők." } }
+      { image: "img/dishes/bruschetta.svg", price: 2500, kcal: 250, protein: 6, carbs: 34, fat: 10, allergens: ["gluten"],
+        name: { en: "Bruschetta", hu: "Bruschetta" },
+        description: { en: "Toasted ciabatta with diced tomato, basil, garlic and olive oil.",
+                       hu: "Pirított ciabatta kockázott paradicsommal, bazsalikommal, fokhagymával és olívaolajjal." } },
+      { image: "img/dishes/garlic-bread.svg", price: 2800, kcal: 325, protein: 7, carbs: 38, fat: 16, allergens: ["gluten", "milk"],
+        name: { en: "Garlic Bread", hu: "Fokhagymás kenyér" },
+        description: { en: "Baguette baked with garlic butter and fresh parsley.",
+                       hu: "Fokhagymás vajjal és friss petrezselyemmel sütött bagett." } }
     ]},
-    { category: { en: "Main courses", hu: "Főételek" }, dishes: [
-      { image: "", price: 4500, kcal: 640, protein: 38, carbs: 52, fat: 28, allergens: ["gluten", "celery"],
-        name: { en: "Dish name", hu: "Étel neve" },
-        description: { en: "Short description, ingredients.", hu: "Rövid leírás, összetevők." } },
-      { image: "", price: 5200, kcal: 720, protein: 45, carbs: 40, fat: 37, allergens: ["milk", "mustard", "sulphites"],
-        name: { en: "Dish name", hu: "Étel neve" },
-        description: { en: "Short description, ingredients.", hu: "Rövid leírás, összetevők." } }
+    { category: { en: "Main Courses", hu: "Főételek" }, dishes: [
+      { image: "img/dishes/grilled-chicken.svg", price: 5200, kcal: 415, protein: 58, carbs: 12, fat: 15, allergens: ["milk"],
+        name: { en: "Grilled Chicken Breast", hu: "Grillezett csirkemell" },
+        description: { en: "Herb-marinated chicken breast with garlic butter, lemon and roasted vegetables.",
+                       hu: "Fűszeres csirkemell fokhagymás vajjal, citrommal és sült zöldségekkel." } },
+      { image: "img/dishes/spaghetti-bolognese.svg", price: 4500, kcal: 590, protein: 32, carbs: 70, fat: 20, allergens: ["gluten", "celery", "milk", "sulphites"],
+        name: { en: "Spaghetti Bolognese", hu: "Spagetti Bolognese" },
+        description: { en: "Spaghetti with slow-cooked beef ragù, finished with parmesan and basil.",
+                       hu: "Spagetti lassan főtt marharagúval, parmezánnal és bazsalikommal." } }
     ]},
     { category: { en: "Desserts", hu: "Desszertek" }, dishes: [
-      { image: "", price: 1900, kcal: 410, protein: 6, carbs: 48, fat: 21, allergens: ["gluten", "eggs", "milk", "nuts"],
-        name: { en: "Dish name", hu: "Étel neve" },
-        description: { en: "Short description, ingredients.", hu: "Rövid leírás, összetevők." } },
-      { image: "", price: 2100, kcal: 350, protein: 5, carbs: 44, fat: 17, allergens: [],
-        name: { en: "Dish name", hu: "Étel neve" },
-        description: { en: "Short description, ingredients.", hu: "Rövid leírás, összetevők." } }
+      { image: "img/dishes/chocolate-brownie.svg", price: 2100, kcal: 370, protein: 5, carbs: 45, fat: 19, allergens: ["gluten", "eggs", "milk", "nuts", "soy"],
+        name: { en: "Chocolate Brownie", hu: "Csokis brownie" },
+        description: { en: "Warm, fudgy chocolate brownie with walnuts.",
+                       hu: "Meleg, krémes csokoládés brownie dióval." } },
+      { image: "img/dishes/cheesecake.svg", price: 1900, kcal: 405, protein: 7, carbs: 36, fat: 26, allergens: ["gluten", "eggs", "milk"],
+        name: { en: "Cheesecake", hu: "Sajttorta" },
+        description: { en: "Creamy baked cheesecake on a biscuit base, with strawberry.",
+                       hu: "Krémes sült sajttorta keksz alapon, eperrel." } }
     ]}
   ],
 

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Grilled chicken breast with lemon and vegetables">
+<rect width="400" height="300" fill="#FFCCD5"/>
+<ellipse cx="204" cy="162" rx="132" ry="124" fill="#800F2F" opacity=".12"/>
+<circle cx="200" cy="150" r="124" fill="#FFF0F3"/>
+<circle cx="200" cy="150" r="124" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+<circle cx="200" cy="150" r="98" fill="none" stroke="#FFCCD5" stroke-width="3"/>
+<path d="M96 160 C 90 108 150 78 214 88 C 270 96 304 130 288 172 C 272 214 190 228 140 214 C 112 206 98 186 96 160Z" fill="#9C5A21"/>
+<path d="M108 158 C 104 116 152 92 212 100 C 262 108 288 134 276 168 C 262 202 190 214 144 202 C 122 196 110 178 108 158Z" fill="#C98340"/>
+<path d="M132 100 L 102 210" stroke="#6B3A12" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+<path d="M158 100 L 128 210" stroke="#6B3A12" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+<path d="M184 100 L 154 210" stroke="#6B3A12" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+<path d="M210 100 L 180 210" stroke="#6B3A12" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+<path d="M236 100 L 206 210" stroke="#6B3A12" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+<path d="M262 100 L 232 210" stroke="#6B3A12" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+<path d="M120 140 C 150 118 200 112 240 122" stroke="#E7B16A" stroke-width="5" fill="none" opacity=".6" stroke-linecap="round"/>
+<g transform="translate(300 100)"><circle r="22" fill="#F4D03F"/><circle r="17" fill="#F9E27D"/><path d="M0 -17 V 17 M-17 0 H 17 M-12 -12 L 12 12 M12 -12 L -12 12" stroke="#F4D03F" stroke-width="2"/></g>
+<circle cx="110" cy="222" r="12" fill="#3A8F5C"/><circle cx="105" cy="217" r="6" fill="#4CAF73"/><circle cx="138" cy="236" r="12" fill="#3A8F5C"/><circle cx="133" cy="231" r="6" fill="#4CAF73"/><circle cx="170" cy="240" r="12" fill="#3A8F5C"/><circle cx="165" cy="235" r="6" fill="#4CAF73"/><rect x="214" y="238" width="26" height="12" rx="6" fill="#F08A24" transform="rotate(20 214 238)"/><rect x="244" y="230" width="26" height="12" rx="6" fill="#F08A24" transform="rotate(-30 244 230)"/><path d="M262 76 Q 290 60 316 66" stroke="#2F6B4A" stroke-width="3" fill="none"/><ellipse cx="274" cy="69" rx="8" ry="3" fill="#3E8E5A" transform="rotate(-40 274 69)"/><ellipse cx="288" cy="63" rx="8" ry="3" fill="#3E8E5A" transform="rotate(30 288 63)"/><ellipse cx="302" cy="64" rx="8" ry="3" fill="#3E8E5A" transform="rotate(-30 302 64)"/><ellipse cx="312" cy="66" rx="8" ry="3" fill="#3E8E5A" transform="rotate(25 312 66)"/></svg>
