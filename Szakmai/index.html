@@ -31,7 +31,7 @@
         </div>
     </header>
 
-    <main id="main">
+    <main id="main" tabindex="-1">
         <section class="hero" id="top" aria-labelledby="hero-title">
             <div class="hero-content">
                 <p class="hero-eyebrow" data-i18n="hero.eyebrow"></p>
@@ -73,10 +73,10 @@
                     <fieldset class="step">
                         <legend data-i18n="reservation.steps.date"></legend>
                         <div class="chips" id="date-quick"><!-- Today / Tomorrow chips --></div>
-                        <label class="date-other">
-                            <span data-i18n="reservation.otherDate"></span>
-                            <input type="date" id="r-date" name="date" required>
-                        </label>
+                        <div class="calendar" id="calendar"><!-- rendered --></div>
+                        <p class="closed-note" id="closed-note"></p>
+                        <input type="hidden" id="r-date" name="date">
+                        <p class="field-error" id="date-error" role="alert" hidden></p>
                     </fieldset>
 
                     <fieldset class="step step-wide">
@@ -117,7 +117,7 @@
 
                 <aside class="booking-summary" aria-labelledby="summary-title">
                     <h3 id="summary-title" data-i18n="reservation.summary"></h3>
-                    <dl id="summary"><!-- live summary --></dl>
+                    <dl id="summary" aria-live="polite"><!-- live summary --></dl>
                     <button type="submit" class="hero-button" data-i18n="reservation.submit"></button>
                     <p class="form-note" data-i18n="reservation.note"></p>
                 </aside>
@@ -128,7 +128,15 @@
             <header class="section-head">
                 <h2 id="about-title" data-i18n="about.title"></h2>
             </header>
-            <div class="about-text" id="about-text"><!-- rendered --></div>
+            <div class="about-layout">
+                <div class="about-copy">
+                    <p class="about-lead" id="about-lead"></p>
+                    <div class="about-text" id="about-text"><!-- rendered --></div>
+                </div>
+                <figure class="about-quote">
+                    <blockquote><p id="about-quote"></p></blockquote>
+                </figure>
+            </div>
             <ul class="values" id="about-values"><!-- rendered --></ul>
         </section>
 

@@ -36,6 +36,7 @@
     });
     document.querySelectorAll("[data-map]").forEach(function (n) { n.href = info.mapUrl; n.target = "_blank"; n.rel = "noopener"; });
 
+    $("about-lead").textContent = t.about.lead; $("about-quote").textContent = t.about.quote;
     var at = $("about-text"); at.textContent = "";
     t.about.text.forEach(function (p) { at.appendChild(el("p", null, p)); });
     var av = $("about-values"); av.textContent = "";
@@ -127,15 +128,15 @@
     updateSummary();
   }
 
-  function chip(name, value, label, checked) {
-    var l = el("label", "chip"), i = el("input"); i.type = "radio"; i.name = name; i.value = value; i.checked = !!checked;
+  function chip(name, value, label, checked, disabled) {
+    var l = el("label", "chip"), i = el("input"); i.type = "radio"; i.name = name; i.value = value; i.checked = !!checked; i.disabled = !!disabled;
     l.appendChild(i); l.appendChild(el("span", null, label)); return l;
   }
 
   function renderDateQuick() {
     var t = SITE[lang].reservation, box = $("date-quick"), cur = $("r-date").value; box.textContent = "";
     [[0, t.today], [1, t.tomorrow]].forEach(function (p) {
-      var v = iso(addDays(p[0])); box.appendChild(chip("dateq", v, p[1], cur === v));
+      var d = addDays(p[0]), v = iso(d); box.appendChild(chip("dateq", v, p[1], cur === v, !selectable(d)));
     });
   }
 
@@ -191,19 +192,116 @@
     if (!$("r-date").value || !checked("time")) { var h = el("p", "summary-hint", t.summaryEmpty); dl.appendChild(h); }
   }
 
+  /* ---------- calendar: past days and closed weekdays cannot be chosen ---------- */
+  var closedDays = R.closedWeekdays || [];
+  var minDate = new Date(); minDate = new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate());
+  var maxDate = addDays(R.daysAhead); maxDate = new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate());
+  var viewY = minDate.getFullYear(), viewM = minDate.getMonth(), focusIso = "";
+
+  function slotsLeftToday() {
+    var n = new Date(), nowMin = n.getHours() * 60 + n.getMinutes();
+    return R.slots.some(function (g) { return g.times.some(function (tm) { var m = tm.split(":"); return +m[0] * 60 + +m[1] > nowMin + 30; }); });
+  }
+  function selectable(d) {
+    d = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    if (d < minDate || d > maxDate || closedDays.indexOf(d.getDay()) > -1) return false;
+    return d.getTime() !== minDate.getTime() || slotsLeftToday();
+  }
+  function loc() { return lang === "hu" ? "hu-HU" : "en-GB"; }
+
+  function setDate(v, fromCalendar) {
+    $("r-date").value = v; $("date-error").hidden = true;
+    if (v) { var d = fromIso(v); viewY = d.getFullYear(); viewM = d.getMonth(); focusIso = v; }
+    renderDateQuick(); renderCalendar(!!fromCalendar); renderSlots(); updateSummary();
+  }
+
+  function renderCalendar(focus) {
+    var t = SITE[lang].reservation, box = $("calendar"), sel = $("r-date").value; box.textContent = "";
+    if (!focusIso) { var d0 = new Date(minDate); for (var k = 0; k < 400 && !selectable(d0); k++) d0.setDate(d0.getDate() + 1); focusIso = iso(d0); }
+    var fd = fromIso(focusIso); if (fd.getFullYear() !== viewY || fd.getMonth() !== viewM) {
+      var inView = new Date(viewY, viewM, Math.min(fd.getDate(), 28)); focusIso = null;
+      for (var j = 0; j < 31; j++) { var c = new Date(viewY, viewM, 1 + j); if (c.getMonth() === viewM && selectable(c)) { focusIso = iso(c); break; } }
+      if (!focusIso) focusIso = iso(new Date(viewY, viewM, 1));
+    }
+
+    var head = el("div", "cal-head");
+    var prev = el("button", "cal-nav", "\u2039"); prev.type = "button"; prev.setAttribute("aria-label", t.prevMonth);
+    var next = el("button", "cal-nav", "\u203a"); next.type = "button"; next.setAttribute("aria-label", t.nextMonth);
+    var title = el("p", "cal-title", new Date(viewY, viewM, 1).toLocaleDateString(loc(), { month: "long", year: "numeric" }));
+    title.id = "cal-title"; title.setAttribute("aria-live", "polite");
+    var atMin = viewY === minDate.getFullYear() && viewM === minDate.getMonth();
+    var atMax = viewY === maxDate.getFullYear() && viewM === maxDate.getMonth();
+    prev.setAttribute("aria-disabled", String(atMin)); next.setAttribute("aria-disabled", String(atMax));
+    prev.addEventListener("click", function () { if (!atMin) { viewM--; if (viewM < 0) { viewM = 11; viewY--; } focusIso = ""; renderCalendar(false); } });
+    next.addEventListener("click", function () { if (!atMax) { viewM++; if (viewM > 11) { viewM = 0; viewY++; } focusIso = ""; renderCalendar(false); } });
+    head.appendChild(prev); head.appendChild(title); head.appendChild(next); box.appendChild(head);
+
+    var table = el("table", "cal-grid"); table.setAttribute("role", "grid"); table.setAttribute("aria-labelledby", "cal-title");
+    var thead = el("thead"), hr = el("tr");
+    for (var w = 0; w < 7; w++) {
+      var wd = new Date(2026, 0, 5 + w), th = el("th", null, wd.toLocaleDateString(loc(), { weekday: "short" }));
+      th.scope = "col"; th.setAttribute("abbr", wd.toLocaleDateString(loc(), { weekday: "long" })); hr.appendChild(th);
+    }
+    thead.appendChild(hr); table.appendChild(thead);
+
+    var tbody = el("tbody"), first = new Date(viewY, viewM, 1), lead = (first.getDay() + 6) % 7;
+    var days = new Date(viewY, viewM + 1, 0).getDate(), todayIso = iso(new Date()), row = null;
+    for (var i = 0; i < Math.ceil((lead + days) / 7) * 7; i++) {
+      if (i % 7 === 0) { row = el("tr"); tbody.appendChild(row); }
+      var td = el("td"), n = i - lead + 1;
+      if (n >= 1 && n <= days) {
+        var d = new Date(viewY, viewM, n), id = iso(d), ok = selectable(d);
+        td.setAttribute("role", "gridcell"); td.setAttribute("aria-selected", String(id === sel));
+        var b = el("button", "cal-day" + (ok ? "" : " is-disabled") + (id === sel ? " is-selected" : "") + (id === todayIso ? " is-today" : ""), String(n));
+        b.type = "button"; b.dataset.date = id; b.tabIndex = id === focusIso ? 0 : -1;
+        b.setAttribute("aria-label", longDate(id) + (ok ? "" : ", " + t.unavailable));
+        if (!ok) b.setAttribute("aria-disabled", "true");
+        td.appendChild(b);
+      }
+      row.appendChild(td);
+    }
+    table.appendChild(tbody); box.appendChild(table);
+
+    var names = closedDays.map(function (n) { return new Date(2026, 0, 4 + n).toLocaleDateString(loc(), { weekday: "long" }); });
+    $("closed-note").textContent = names.length ? t.closedOn + " " + names.join(", ") : "";
+    if (focus) { var f = box.querySelector('.cal-day[tabindex="0"]'); if (f) f.focus(); }
+  }
+
+  $("calendar").addEventListener("click", function (e) {
+    var b = e.target.closest(".cal-day"); if (!b || b.getAttribute("aria-disabled") === "true") return;
+    setDate(b.dataset.date, true);
+  });
+  $("calendar").addEventListener("keydown", function (e) {
+    var b = e.target.closest(".cal-day"); if (!b) return;
+    var d = fromIso(b.dataset.date), step = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 }[e.key];
+    if (step) d.setDate(d.getDate() + step);
+    else if (e.key === "Home") d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+    else if (e.key === "End") d.setDate(d.getDate() + (6 - (d.getDay() + 6) % 7));
+    else if (e.key === "PageUp") d.setMonth(d.getMonth() - 1);
+    else if (e.key === "PageDown") d.setMonth(d.getMonth() + 1);
+    else return;
+    e.preventDefault();
+    if (d < minDate || d > maxDate) return;
+    viewY = d.getFullYear(); viewM = d.getMonth(); focusIso = iso(d); renderCalendar(true);
+  });
+
   function renderReservation() {
-    renderDateQuick(); renderSlots(); renderSeating(); renderOccasions(); setGuests(guests);
+    renderDateQuick(); renderCalendar(false); renderSlots(); renderSeating(); renderOccasions(); setGuests(guests);
   }
 
   var form = $("reservation-form");
   $("guests-minus").addEventListener("click", function () { setGuests(guests - 1); });
   $("guests-plus").addEventListener("click", function () { setGuests(guests + 1); });
-  $("r-date").min = iso(new Date()); $("r-date").max = iso(addDays(R.daysAhead));
-  $("r-date").addEventListener("change", function () { renderDateQuick(); renderSlots(); updateSummary(); });
   form.addEventListener("change", function (e) {
-    if (e.target.name === "dateq") { $("r-date").value = e.target.value; renderSlots(); }
-    if (e.target.id === "r-date") return;
+    if (e.target.name === "dateq") { setDate(e.target.value, false); return; }
     updateSummary();
+  });
+  /* the date is checked first, so its message comes before the browser's own ones */
+  form.querySelector('button[type="submit"]').addEventListener("click", function (e) {
+    if ($("r-date").value) return;
+    e.preventDefault();
+    var er = $("date-error"); er.textContent = SITE[lang].reservation.errors.date; er.hidden = false;
+    var f = document.querySelector('#calendar .cal-day[tabindex="0"]'); if (f) f.focus();
   });
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -221,4 +319,18 @@
   var saved = store();
   lang = LANGS.indexOf(saved) > -1 ? saved : "en";      // English on first visit
   render();
+})();
+
+/* highlight the nav link of the section in view (aria-current) */
+(function () {
+  if (!("IntersectionObserver" in window)) return;
+  var links = {}; document.querySelectorAll("nav a[href^='#']").forEach(function (a) { links[a.getAttribute("href").slice(1)] = a; });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting || !links[en.target.id]) return;
+      Object.keys(links).forEach(function (k) { links[k].removeAttribute("aria-current"); });
+      links[en.target.id].setAttribute("aria-current", "true");
+    });
+  }, { rootMargin: "-40% 0px -55% 0px" });
+  Object.keys(links).forEach(function (id) { var s = document.getElementById(id); if (s) io.observe(s); });
 })();

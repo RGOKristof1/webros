@@ -17,6 +17,7 @@ window.SITE = {
     reservation: {
       minGuests: 1, maxGuests: 12, defaultGuests: 2,
       daysAhead: 60,                           // how far ahead people can book
+      closedWeekdays: [6],                     // days nobody can book: 0=Sunday 1=Monday ... 6=Saturday
       slots: [                                 // bookable times, per group
         { group: "lunch",  times: ["12:00", "12:30", "13:00", "13:30", "14:00"] },
         { group: "dinner", times: ["18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00"] }
@@ -128,6 +129,12 @@ window.SITE = {
       today: "Today",
       tomorrow: "Tomorrow",
       otherDate: "Other date",
+      calendar: "Choose a date",
+      prevMonth: "Previous month",
+      nextMonth: "Next month",
+      unavailable: "not available",
+      closedOn: "Closed on:",
+      errors: { date: "Please choose a day for your visit." },
       slotGroups: { lunch: "Lunch", dinner: "Dinner" },
       noSlotsToday: "No more free times today - please choose another day.",
       seating: {
@@ -150,14 +157,17 @@ window.SITE = {
 
     about: {
       title: "About us",
+      lead: "A small kitchen with a big appetite for doing things properly.",
       text: [
-        "First paragraph: the story of the restaurant.",
-        "Second paragraph: the team, the philosophy, the ingredients."
+        "Everything here is made by hand, from the first loaf of bread to the last spoon of dessert. No shortcuts, no fuss, just honest food cooked with care.",
+        "Our menu follows the seasons and the people who grow our ingredients. We keep it short on purpose, so every plate gets the attention it deserves.",
+        "Come as you are and stay as long as you like. The table is yours, and we will take care of the rest."
       ],
+      quote: "Good food, made by people, for people.",
       values: [
-        { title: "Fresh", text: "Short sentence about this value." },
-        { title: "Local", text: "Short sentence about this value." },
-        { title: "Handmade", text: "Short sentence about this value." }
+        { title: "Fresh", text: "Ingredients arrive in the morning and are on your plate by evening." },
+        { title: "Local", text: "We buy from nearby growers and producers, and we know them by name." },
+        { title: "Handmade", text: "Sauces, bread and desserts are made from scratch in our own kitchen." }
       ]
     },
 
@@ -171,8 +181,8 @@ window.SITE = {
       hoursLabel: "Opening hours",
       hours: [
         { days: "Monday - Friday", time: "11:00 - 22:00" },
-        { days: "Saturday",        time: "12:00 - 23:00" },
-        { days: "Sunday",          time: "Closed" }
+        { days: "Saturday",        time: "Closed" },
+        { days: "Sunday",          time: "12:00 - 20:00" }
       ],
       mapLink: "Open in maps"
     },
@@ -242,6 +252,12 @@ window.SITE = {
       today: "Ma",
       tomorrow: "Holnap",
       otherDate: "Másik nap",
+      calendar: "Válasszon dátumot",
+      prevMonth: "Előző hónap",
+      nextMonth: "Következő hónap",
+      unavailable: "nem elérhető",
+      closedOn: "Zárva:",
+      errors: { date: "Kérjük, válasszon napot a látogatáshoz." },
       slotGroups: { lunch: "Ebéd", dinner: "Vacsora" },
       noSlotsToday: "Mára már nincs szabad időpont - kérjük, válasszon másik napot.",
       seating: {
@@ -264,14 +280,17 @@ window.SITE = {
 
     about: {
       title: "Rólunk",
+      lead: "Kicsi konyha, nagy vággyal arra, hogy mindent rendesen csináljunk.",
       text: [
-        "Első bekezdés: az étterem története.",
-        "Második bekezdés: a csapat, a filozófia, az alapanyagok."
+        "Nálunk minden kézzel készül, az első szelet kenyértől az utolsó kanál desszertig. Nincsenek kerülőutak, nincs felhajtás, csak őszinte étel, gondosan elkészítve.",
+        "Étlapunk követi az évszakokat és azokat, akik az alapanyagot termesztik. Szándékosan rövid, hogy minden tányér megkapja a figyelmet, amit megérdemel.",
+        "Jöjjön úgy, ahogy van, és maradjon, ameddig jólesik. Az asztal az öné, a többit mi intézzük."
       ],
+      quote: "Jó étel, emberek keze munkája, emberek számára.",
       values: [
-        { title: "Friss", text: "Egy rövid mondat erről az értékről." },
-        { title: "Helyi", text: "Egy rövid mondat erről az értékről." },
-        { title: "Kézzel készült", text: "Egy rövid mondat erről az értékről." }
+        { title: "Friss", text: "A hozzávalók reggel érkeznek, és estére már a tányérján vannak." },
+        { title: "Helyi", text: "Közeli termelőktől vásárolunk, és név szerint ismerjük őket." },
+        { title: "Kézzel készült", text: "A szószok, a kenyér és a desszertek nálunk készülnek, a nulláról." }
       ]
     },
 
@@ -285,8 +304,8 @@ window.SITE = {
       hoursLabel: "Nyitvatartás",
       hours: [
         { days: "Hétfő - Péntek", time: "11:00 - 22:00" },
-        { days: "Szombat",        time: "12:00 - 23:00" },
-        { days: "Vasárnap",       time: "Zárva" }
+        { days: "Szombat",        time: "Zárva" },
+        { days: "Vasárnap",       time: "12:00 - 20:00" }
       ],
       mapLink: "Megnyitás térképen"
     },
