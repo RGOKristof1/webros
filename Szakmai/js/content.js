@@ -1,82 +1,197 @@
 /* =====================================================================
-   CONTENT FILE - the ONLY file you need to edit to fill in the site.
-   Every text on the page comes from here, in English (en) and Hungarian (hu).
-   Replace the placeholder text, keep the keys (left side) as they are.
+   TARTALOM – ez az EGYETLEN fájl, amit az oldal kitöltéséhez szerkeszteni kell.
+
+   Az oldalon minden szöveg innen jön, angolul (en) és magyarul (hu).
+   Szabály: a kettőspont BAL oldalát (a "kulcsot") ne írd át,
+            csak a jobb oldalt, az idézőjelek közötti szöveget.
+
+   Tartalom:
+     1. Általános adatok (név, telefon, e-mail, foglalási beállítások)
+     2. Étlap
+     3. Angol szövegek
+     4. Magyar szövegek
    ===================================================================== */
 
 window.SITE = {
 
-  /* ---------- 1. Language-independent info ---------- */
+  /* ---------- 1. ÁLTALÁNOS ADATOK (nyelvtől független) ---------- */
   info: {
     name: "webros.hu",
-    website: "https://webros.hu",              // the logo / name in the top bar links here
+    website: "https://webros.hu",              // a bal felső logó ide mutat
     phone: "+36 00 000 0000",
     email: "hello@webros.hu",
-    reservationEmail: "foglalas@webros.hu",   // reservations are sent here (mailto)
+    reservationEmail: "foglalas@webros.hu",    // erre a címre mennek a foglalások
     mapUrl: "https://maps.google.com/?q=Budapest",
-    currency: "Ft",                            // shown after every price
+    currency: "Ft",                            // minden ár után ez áll
+
     reservation: {
-      minGuests: 1, maxGuests: 12, defaultGuests: 2,
-      daysAhead: 60,                           // how far ahead people can book
-      closedWeekdays: [6],                     // days nobody can book: 0=Sunday 1=Monday ... 6=Saturday
-      slots: [                                 // bookable times, per group
+      minGuests: 1,                            // legkevesebb vendég
+      maxGuests: 12,                           // legtöbb vendég
+      defaultGuests: 2,                        // ennyi van alapból kiválasztva
+      daysAhead: 60,                           // hány nappal előre lehet foglalni
+      closedWeekdays: [6],                     // zárva: 0 = vasárnap, 1 = hétfő ... 6 = szombat
+
+      // Foglalható időpontok, csoportonként
+      slots: [
         { group: "lunch",  times: ["12:00", "12:30", "13:00", "13:30", "14:00"] },
         { group: "dinner", times: ["18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00"] }
       ],
-      seating: ["indoor", "terrace", "bar"],   // names are translated in section 3/4
+
+      seating: ["indoor", "terrace", "bar"],   // a nevük lent, a 3. és 4. részben van
       occasions: ["none", "birthday", "anniversary", "business"]
     },
+
     social: [
       { label: "Facebook",  url: "https://facebook.com/" },
       { label: "Instagram", url: "https://instagram.com/" }
     ]
   },
 
-  /* ---------- 2. MENU - one block per dish, everything in one place ----------
-       image     : photo path (put files in img/dishes/). "" = placeholder
-       price     : number (currency is set above)
-       kcal      : calories per portion
-       protein / carbs / fat : grams per portion
-       allergens : any of  gluten crustaceans eggs fish peanuts soy milk nuts
-                   celery mustard sesame sulphites lupin molluscs   ( [] = none )
-     Nutrition is per portion and is an ESTIMATE from typical portion sizes -
-     replace it with the values for your own recipes and portions.
-     To add a dish copy a { ... } block; to add a category copy a whole
-     { category: ..., dishes: [...] } block.                                  */
+  /* ---------- 2. ÉTLAP – ételenként egy blokk ----------
+
+       image     : a kép helye (a képeket az img/dishes/ mappába tedd). "" = helyettesítő kép
+       price     : ár, csak a szám (a pénznem fent van beállítva)
+       kcal      : kalória adagonként
+       protein   : fehérje grammban, adagonként
+       carbs     : szénhidrát grammban, adagonként
+       fat       : zsír grammban, adagonként
+       allergens : ezek közül bármelyik:
+                   gluten crustaceans eggs fish peanuts soy milk nuts
+                   celery mustard sesame sulphites lupin molluscs
+                   ( [] = nincs allergén )
+
+     A tápértékek csak BECSLÉSEK átlagos adagra – írd át a saját
+     receptjeid és adagjaid szerint.
+
+     Új étel:      másolj le egy { image: ... } blokkot (a végén vesszővel).
+     Új kategória: másolj le egy teljes { category: ..., dishes: [...] } blokkot. */
   menu: [
-    { category: { en: "Starters", hu: "Előételek" }, dishes: [
-      { image: "img/dishes/bruschetta.svg", price: 2500, kcal: 250, protein: 6, carbs: 34, fat: 10, allergens: ["gluten"],
-        name: { en: "Bruschetta", hu: "Bruschetta" },
-        description: { en: "Toasted ciabatta with diced tomato, basil, garlic and olive oil.",
-                       hu: "Pirított ciabatta kockázott paradicsommal, bazsalikommal, fokhagymával és olívaolajjal." } },
-      { image: "img/dishes/garlic-bread.svg", price: 2800, kcal: 325, protein: 7, carbs: 38, fat: 16, allergens: ["gluten", "milk"],
-        name: { en: "Garlic Bread", hu: "Fokhagymás kenyér" },
-        description: { en: "Baguette baked with garlic butter and fresh parsley.",
-                       hu: "Fokhagymás vajjal és friss petrezselyemmel sütött bagett." } }
-    ]},
-    { category: { en: "Main Courses", hu: "Főételek" }, dishes: [
-      { image: "img/dishes/grilled-chicken.svg", price: 5200, kcal: 415, protein: 58, carbs: 12, fat: 15, allergens: ["milk"],
-        name: { en: "Grilled Chicken Breast", hu: "Grillezett csirkemell" },
-        description: { en: "Herb-marinated chicken breast with garlic butter, lemon and roasted vegetables.",
-                       hu: "Fűszeres csirkemell fokhagymás vajjal, citrommal és sült zöldségekkel." } },
-      { image: "img/dishes/spaghetti-bolognese.svg", price: 4500, kcal: 590, protein: 32, carbs: 70, fat: 20, allergens: ["gluten", "celery", "milk", "sulphites"],
-        name: { en: "Spaghetti Bolognese", hu: "Spagetti Bolognese" },
-        description: { en: "Spaghetti with slow-cooked beef ragù, finished with parmesan and basil.",
-                       hu: "Spagetti lassan főtt marharagúval, parmezánnal és bazsalikommal." } }
-    ]},
-    { category: { en: "Desserts", hu: "Desszertek" }, dishes: [
-      { image: "img/dishes/chocolate-brownie.svg", price: 2100, kcal: 370, protein: 5, carbs: 45, fat: 19, allergens: ["gluten", "eggs", "milk", "nuts", "soy"],
-        name: { en: "Chocolate Brownie", hu: "Csokis brownie" },
-        description: { en: "Warm, fudgy chocolate brownie with walnuts.",
-                       hu: "Meleg, krémes csokoládés brownie dióval." } },
-      { image: "img/dishes/cheesecake.svg", price: 1900, kcal: 405, protein: 7, carbs: 36, fat: 26, allergens: ["gluten", "eggs", "milk"],
-        name: { en: "Cheesecake", hu: "Sajttorta" },
-        description: { en: "Creamy baked cheesecake on a biscuit base, with strawberry.",
-                       hu: "Krémes sült sajttorta keksz alapon, eperrel." } }
-    ]}
+
+    /* ----- Előételek ----- */
+    {
+      category: { en: "Starters", hu: "Előételek" },
+      dishes: [
+        {
+          image: "img/dishes/bruschetta.svg",
+          price: 2500,
+          kcal: 250,
+          protein: 6,
+          carbs: 34,
+          fat: 10,
+          allergens: ["gluten"],
+          name: {
+            en: "Bruschetta",
+            hu: "Bruschetta"
+          },
+          description: {
+            en: "Toasted ciabatta with diced tomato, basil, garlic and olive oil.",
+            hu: "Pirított ciabatta kockázott paradicsommal, bazsalikommal, fokhagymával és olívaolajjal."
+          }
+        },
+        {
+          image: "img/dishes/garlic-bread.svg",
+          price: 2800,
+          kcal: 325,
+          protein: 7,
+          carbs: 38,
+          fat: 16,
+          allergens: ["gluten", "milk"],
+          name: {
+            en: "Garlic Bread",
+            hu: "Fokhagymás kenyér"
+          },
+          description: {
+            en: "Baguette baked with garlic butter and fresh parsley.",
+            hu: "Fokhagymás vajjal és friss petrezselyemmel sütött bagett."
+          }
+        }
+      ]
+    },
+
+    /* ----- Főételek ----- */
+    {
+      category: { en: "Main Courses", hu: "Főételek" },
+      dishes: [
+        {
+          image: "img/dishes/grilled-chicken.svg",
+          price: 5200,
+          kcal: 415,
+          protein: 58,
+          carbs: 12,
+          fat: 15,
+          allergens: ["milk"],
+          name: {
+            en: "Grilled Chicken Breast",
+            hu: "Grillezett csirkemell"
+          },
+          description: {
+            en: "Herb-marinated chicken breast with garlic butter, lemon and roasted vegetables.",
+            hu: "Fűszeres csirkemell fokhagymás vajjal, citrommal és sült zöldségekkel."
+          }
+        },
+        {
+          image: "img/dishes/spaghetti-bolognese.svg",
+          price: 4500,
+          kcal: 590,
+          protein: 32,
+          carbs: 70,
+          fat: 20,
+          allergens: ["gluten", "celery", "milk", "sulphites"],
+          name: {
+            en: "Spaghetti Bolognese",
+            hu: "Spagetti Bolognese"
+          },
+          description: {
+            en: "Spaghetti with slow-cooked beef ragù, finished with parmesan and basil.",
+            hu: "Spagetti lassan főtt marharagúval, parmezánnal és bazsalikommal."
+          }
+        }
+      ]
+    },
+
+    /* ----- Desszertek ----- */
+    {
+      category: { en: "Desserts", hu: "Desszertek" },
+      dishes: [
+        {
+          image: "img/dishes/chocolate-brownie.svg",
+          price: 2100,
+          kcal: 370,
+          protein: 5,
+          carbs: 45,
+          fat: 19,
+          allergens: ["gluten", "eggs", "milk", "nuts", "soy"],
+          name: {
+            en: "Chocolate Brownie",
+            hu: "Csokis brownie"
+          },
+          description: {
+            en: "Warm, fudgy chocolate brownie with walnuts.",
+            hu: "Meleg, krémes csokoládés brownie dióval."
+          }
+        },
+        {
+          image: "img/dishes/cheesecake.svg",
+          price: 1900,
+          kcal: 405,
+          protein: 7,
+          carbs: 36,
+          fat: 26,
+          allergens: ["gluten", "eggs", "milk"],
+          name: {
+            en: "Cheesecake",
+            hu: "Sajttorta"
+          },
+          description: {
+            en: "Creamy baked cheesecake on a biscuit base, with strawberry.",
+            hu: "Krémes sült sajttorta keksz alapon, eperrel."
+          }
+        }
+      ]
+    }
   ],
 
-  /* ---------- 3. English texts ---------- */
+  /* ---------- 3. ANGOL SZÖVEGEK ---------- */
   en: {
     meta: {
       title: "webros.hu - Restaurant",
@@ -132,7 +247,7 @@ window.SITE = {
         occasion: "5. Special occasion?",
         contact: "6. Your details"
       },
-      guestsUnit: ["guest", "guests"],         // singular, plural
+      guestsUnit: ["guest", "guests"],         // egyes szám, többes szám
       guestsMinus: "Fewer guests",
       guestsPlus: "More guests",
       today: "Today",
@@ -199,7 +314,7 @@ window.SITE = {
     footer: { rights: "All rights reserved.", backToTop: "Back to top" }
   },
 
-  /* ---------- 4. Magyar szövegek ---------- */
+  /* ---------- 4. MAGYAR SZÖVEGEK ---------- */
   hu: {
     meta: {
       title: "webros.hu - Étterem",

@@ -5,17 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>webros.hu</title>
     <meta name="description" content="">
-    <link rel="stylesheet" href="css/style.css?v=20261012">
+    <link rel="stylesheet" href="css/style.css?v=20261017">
 </head>
+
+<!--
+    FONTOS: a legtöbb szöveg itt üres. Ezeket a js/content.js fájlból
+    tölti be az oldal, a kiválasztott nyelven (angol / magyar).
+    A data-i18n="..." azt mondja meg, melyik szöveg kerüljön oda.
+    Szöveget tehát a content.js-ben kell átírni, nem itt.
+-->
+
 <body>
+    <!-- Rejtett link: billentyűzettel (Tab) egyből a tartalomra ugrik -->
     <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
 
+
+    <!-- ============================ FEJLÉC ============================ -->
     <header class="site-header">
+
+        <!-- Logó és az oldal neve -->
         <a class="brand" href="https://webros.hu" aria-label="webros.hu">
             <img src="img/joeyy.jpg" alt="" class="logo">
             <span class="home" data-info="name">webros.hu</span>
         </a>
 
+        <!-- Menü -->
         <nav aria-label="Main">
             <ul>
                 <li><a href="#menu" data-i18n="nav.menu">Menu</a></li>
@@ -25,13 +39,18 @@
             </ul>
         </nav>
 
+        <!-- Nyelvváltó -->
         <div class="lang-switch" role="group" aria-label="Language">
             <button type="button" data-lang="en" aria-pressed="true">EN</button>
             <button type="button" data-lang="hu" aria-pressed="false">HU</button>
         </div>
+
     </header>
 
+
     <main id="main" tabindex="-1">
+
+        <!-- ======================== NYITÓ RÉSZ ======================== -->
         <section class="hero" id="top" aria-labelledby="hero-title">
             <div class="hero-content">
                 <p class="hero-eyebrow" data-i18n="hero.eyebrow"></p>
@@ -39,19 +58,26 @@
                 <p class="hero-description" data-i18n="hero.description"></p>
                 <a href="#reservation" class="hero-button" data-i18n="hero.button"></a>
             </div>
+
             <figure class="hero-image">
                 <img src="img/joeyy.jpg" alt="" data-i18n-attr="alt:hero.imageAlt">
             </figure>
         </section>
 
+
+        <!-- ========================== ÉTLAP ========================== -->
         <section class="section" id="menu" aria-labelledby="menu-title">
             <header class="section-head">
                 <h2 id="menu-title" data-i18n="menu.title"></h2>
                 <p data-i18n="menu.intro"></p>
             </header>
-            <div class="menu-grid" id="menu-list"><!-- rendered from content.js --></div>
+
+            <!-- Az ételeket a content.js "menu" részéből rakja ide az oldal -->
+            <div class="menu-grid" id="menu-list"></div>
         </section>
 
+
+        <!-- ====================== ASZTALFOGLALÁS ====================== -->
         <section class="section section-surface" id="reservation" aria-labelledby="reservation-title">
             <header class="section-head">
                 <h2 id="reservation-title" data-i18n="reservation.title"></h2>
@@ -59,7 +85,11 @@
             </header>
 
             <form class="booking" id="reservation-form">
+
+                <!-- Bal oldal: a foglalás lépései -->
                 <div class="booking-steps">
+
+                    <!-- 1. Hány fő? -->
                     <fieldset class="step">
                         <legend data-i18n="reservation.steps.guests"></legend>
                         <div class="stepper">
@@ -70,127 +100,175 @@
                         </div>
                     </fieldset>
 
+                    <!-- 2. Melyik napon? (Ma / Holnap gombok + naptár) -->
                     <fieldset class="step">
                         <legend data-i18n="reservation.steps.date"></legend>
-                        <div class="chips" id="date-quick"><!-- Today / Tomorrow chips --></div>
-                        <div class="calendar" id="calendar"><!-- rendered --></div>
+                        <div class="chips" id="date-quick"></div>
+                        <div class="calendar" id="calendar"></div>
                         <p class="closed-note" id="closed-note"></p>
                         <input type="hidden" id="r-date" name="date">
                         <p class="field-error" id="date-error" role="alert" hidden></p>
                     </fieldset>
 
+                    <!-- 3. Hánykor? -->
                     <fieldset class="step step-wide">
                         <legend data-i18n="reservation.steps.time"></legend>
-                        <div id="time-slots"><!-- rendered --></div>
+                        <div id="time-slots"></div>
                     </fieldset>
 
+                    <!-- 4. Hol szeretnének ülni? -->
                     <fieldset class="step step-wide">
                         <legend data-i18n="reservation.steps.seating"></legend>
-                        <div class="cards" id="seating"><!-- rendered --></div>
+                        <div class="cards" id="seating"></div>
                     </fieldset>
 
+                    <!-- 5. Különleges alkalom? -->
                     <fieldset class="step">
                         <legend data-i18n="reservation.steps.occasion"></legend>
                         <select id="r-occasion" name="occasion"></select>
                     </fieldset>
 
+                    <!-- 6. Elérhetőség -->
                     <fieldset class="step step-wide contact-fields">
                         <legend data-i18n="reservation.steps.contact"></legend>
+
                         <div class="field">
                             <label for="r-name" data-i18n="reservation.fields.name"></label>
                             <input id="r-name" name="name" type="text" autocomplete="name" required>
                         </div>
+
                         <div class="field">
                             <label for="r-email" data-i18n="reservation.fields.email"></label>
                             <input id="r-email" name="email" type="email" autocomplete="email" required>
                         </div>
+
                         <div class="field">
                             <label for="r-phone" data-i18n="reservation.fields.phone"></label>
                             <input id="r-phone" name="phone" type="tel" autocomplete="tel" required>
                         </div>
+
                         <div class="field field-wide">
                             <label for="r-message" data-i18n="reservation.fields.message"></label>
                             <textarea id="r-message" name="message" rows="2"></textarea>
                         </div>
                     </fieldset>
+
                 </div>
 
+                <!-- Jobb oldal: összegzés és küldés gomb -->
                 <aside class="booking-summary" aria-labelledby="summary-title">
                     <h3 id="summary-title" data-i18n="reservation.summary"></h3>
-                    <dl id="summary" aria-live="polite"><!-- live summary --></dl>
+                    <dl id="summary" aria-live="polite"></dl>
                     <button type="submit" class="hero-button" data-i18n="reservation.submit"></button>
                     <p class="form-note" data-i18n="reservation.note"></p>
                 </aside>
+
             </form>
         </section>
 
+
+        <!-- ========================== RÓLUNK ========================== -->
         <section class="section" id="about" aria-labelledby="about-title">
             <header class="section-head">
                 <h2 id="about-title" data-i18n="about.title"></h2>
             </header>
+
             <div class="about-layout">
                 <div class="about-copy">
                     <p class="about-lead" id="about-lead"></p>
-                    <div class="about-text" id="about-text"><!-- rendered --></div>
+                    <div class="about-text" id="about-text"></div>
                 </div>
+
                 <figure class="about-quote">
                     <blockquote><p id="about-quote"></p></blockquote>
                 </figure>
             </div>
-            <ul class="values" id="about-values"><!-- rendered --></ul>
+
+            <!-- Értékeink (Friss, Helyi, Kézzel készült) -->
+            <ul class="values" id="about-values"></ul>
         </section>
 
+
+        <!-- ======================== KAPCSOLAT ======================== -->
         <section class="section section-surface" id="contact" aria-labelledby="contact-title">
             <header class="section-head">
                 <h2 id="contact-title" data-i18n="contact.title"></h2>
                 <p data-i18n="contact.intro"></p>
             </header>
+
             <div class="contact-grid">
                 <address>
                     <h3 data-i18n="contact.addressLabel"></h3>
-                    <p><span data-i18n="contact.address"></span><br>
-                       <a data-map data-i18n="contact.mapLink"></a></p>
+                    <p>
+                        <span data-i18n="contact.address"></span><br>
+                        <a data-map data-i18n="contact.mapLink"></a>
+                    </p>
+
                     <h3 data-i18n="contact.phoneLabel"></h3>
                     <p><a data-info-link="phone"></a></p>
+
                     <h3 data-i18n="contact.emailLabel"></h3>
                     <p><a data-info-link="email"></a></p>
                 </address>
+
                 <div>
                     <h3 data-i18n="contact.hoursLabel"></h3>
-                    <dl class="hours" id="hours"><!-- rendered --></dl>
+                    <dl class="hours" id="hours"></dl>
                 </div>
             </div>
         </section>
+
     </main>
 
+
+    <!-- ========================== LÁBLÉC ========================== -->
     <footer class="site-footer">
         <p>&copy; <span id="year"></span> <span data-info="name"></span>. <span data-i18n="footer.rights"></span></p>
         <ul class="social" id="social"></ul>
         <a href="#top" data-i18n="footer.backToTop"></a>
     </footer>
 
+
+    <!-- ================ ÉTEL-KÁRTYA (felugró ablak) ================
+         Akkor jelenik meg, ha rákattintasz egy ételre az étlapon. -->
     <dialog class="dish-dialog" id="dish-dialog" aria-labelledby="dish-title">
+
+        <!-- Bezáró gomb (×) -->
         <button type="button" class="dish-close" id="dish-close">&times;</button>
-        <img class="dish-photo" id="dish-photo" alt="">
-        <div class="dish-body">
-            <h3 id="dish-title"></h3>
-            <p class="dish-price" id="dish-price"></p>
-            <p id="dish-desc"></p>
 
-            <h4 data-i18n="dish.energy"></h4>
-            <p class="dish-kcal"><strong id="dish-kcal"></strong> <span data-i18n="dish.kcal"></span>
-               <small data-i18n="dish.perPortion"></small></p>
+        <!-- A kártya görgethető tartalma -->
+        <div class="dish-scroll">
+            <img class="dish-photo" id="dish-photo" alt="">
 
-            <h4 data-i18n="dish.macros"></h4>
-            <div class="macro-bar" id="macro-bar" aria-hidden="true"></div>
-            <ul class="macro-list" id="macro-list"></ul>
+            <div class="dish-body">
+                <h3 id="dish-title"></h3>
+                <p class="dish-price" id="dish-price"></p>
+                <p id="dish-desc"></p>
 
-            <h4 data-i18n="dish.allergens"></h4>
-            <ul class="allergens" id="dish-allergens"></ul>
-            <p class="dish-note" data-i18n="dish.allergenNote"></p>
+                <!-- Kalória -->
+                <h4 data-i18n="dish.energy"></h4>
+                <p class="dish-kcal">
+                    <strong id="dish-kcal"></strong>
+                    <span data-i18n="dish.kcal"></span>
+                    <small data-i18n="dish.perPortion"></small>
+                </p>
+
+                <!-- Fehérje / szénhidrát / zsír -->
+                <h4 data-i18n="dish.macros"></h4>
+                <div class="macro-bar" id="macro-bar" aria-hidden="true"></div>
+                <ul class="macro-list" id="macro-list"></ul>
+
+                <!-- Allergének -->
+                <h4 data-i18n="dish.allergens"></h4>
+                <ul class="allergens" id="dish-allergens"></ul>
+                <p class="dish-note" data-i18n="dish.allergenNote"></p>
+            </div>
         </div>
+
     </dialog>
 
+
+    <!-- Először a tartalom (szövegek, étlap), utána a működés -->
     <script src="js/content.js"></script>
     <script src="js/main.js"></script>
 </body>
