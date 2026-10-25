@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#efe0b8"/>
+      <stop offset="1" stop-color="#d8c08c"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="5"/></filter>
+  </defs>
+  <rect width="240" height="300" fill="url(#sky)"/>
+  <circle cx="176" cy="70" r="20" fill="#f6ecd2" stroke="#b8975b"/>
+  <path d="M0 170l40-50 26 26 38-56 44 60 26-24 66 54v120H0z" fill="#b8a27a" stroke="#5a3d1c" stroke-width="2"/>
+  <path d="M104 90l-10 26 14-8 6 16" fill="none" stroke="#5a3d1c" stroke-width="1.5"/>
+  <path d="M0 210q60-30 120-10t120-10v110H0z" fill="#9c8a5e" stroke="#5a3d1c" stroke-width="2"/>
+  <path d="M120 300c-10-30 30-44 10-70s16-30 6-40" fill="none" stroke="#5a3d1c" stroke-width="3" stroke-dasharray="8 7"/>
+  <g fill="#5d6a3e" stroke="#3b2a16">
+    <path d="M30 232l10-26 10 26z"/><path d="M48 238l9-22 9 22z"/><path d="M190 228l10-26 10 26z"/><path d="M208 236l8-20 8 20z"/>
+  </g>
+  <g filter="url(#blur)" fill="#2f2b34" opacity=".35"><ellipse cx="200" cy="150" rx="70" ry="22"/><ellipse cx="40" cy="190" rx="60" ry="16"/></g>
+  <rect x="10" y="10" width="220" height="280" fill="none" stroke="#6b4a22" stroke-width="2"/>
+  <rect x="16" y="16" width="208" height="268" fill="none" stroke="#6b4a22" stroke-width=".8"/>
+</svg>

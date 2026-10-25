@@ -1,0 +1,86 @@
+/* ==========================================================================
+   map.css – interactive caravan map
+   ========================================================================== */
+.map-wrap {
+  position: relative;
+  padding: 8px;
+  background: linear-gradient(var(--leather-2), var(--leather));
+  border: 1px solid var(--gold);
+  box-shadow: var(--shadow);
+}
+.map-viewport {
+  position: relative;
+  height: min(72vh, 680px);
+  min-height: 320px;
+  overflow: hidden;
+  touch-action: none;
+  cursor: grab;
+  background: #cdb784;
+  border: 1px solid rgba(201, 165, 90, .6);
+}
+.map-viewport.dragging { cursor: grabbing; }
+.map-viewport:focus-visible { outline: 3px solid var(--gold); outline-offset: -3px; }
+.map-stage { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
+.map-stage img, .map-overlay {
+  position: absolute; top: 0; left: 0;
+  display: block; max-width: none;
+  user-select: none; -webkit-user-drag: none;
+}
+.map-overlay { overflow: visible; }
+
+.map-toolbar { position: absolute; top: 18px; right: 18px; z-index: 5; display: flex; flex-direction: column; gap: 4px; }
+.map-btn {
+  width: 38px; height: 38px;
+  font-family: var(--font-head); font-size: 1.25rem; line-height: 1;
+  color: var(--gold-soft); background: rgba(46, 29, 15, .9);
+  border: 1px solid var(--gold); border-radius: 4px; cursor: pointer;
+}
+.map-btn:hover { color: #fff; }
+.map-btn:focus-visible { outline-color: var(--gold); }
+
+/* route */
+.route { fill: none; stroke-linecap: round; }
+.route-known { stroke: #6a2410; stroke-width: 3.5; stroke-dasharray: 11 8; filter: drop-shadow(0 0 1.5px rgba(247, 238, 214, .9)); }
+.route-hidden { stroke: #3b2a16; stroke-width: 2.5; stroke-dasharray: 6 9; opacity: .35; }
+
+/* fog of the undiscovered */
+.fog { pointer-events: none; animation: fog-breathe 14s ease-in-out infinite alternate; }
+@keyframes fog-breathe { from { opacity: .88; } to { opacity: 1; } }
+
+/* markers keep their size at any zoom level (--inv = 1 / scale) */
+.marker { transform: translate(var(--x), var(--y)) scale(var(--inv, 1)); }
+.marker-halo { fill: rgba(247, 238, 214, 0); stroke: none; transition: fill .15s ease; }
+.marker-dot { fill: #7b2914; stroke: #f7eed6; stroke-width: 2.5; }
+.marker-num { font: 700 10px var(--font-head); fill: #f7eed6; text-anchor: middle; pointer-events: none; }
+.marker-label {
+  font: 700 15px var(--font-head); letter-spacing: .04em;
+  fill: #2a1c0f; text-anchor: middle;
+  stroke: #f3e6c6; stroke-width: 4px; stroke-linejoin: round; paint-order: stroke;
+  pointer-events: none;
+}
+.marker-known { cursor: pointer; }
+.marker-known:hover .marker-halo, .marker-known:focus .marker-halo { fill: rgba(247, 238, 214, .65); stroke: #c9a55a; stroke-width: 2; }
+.marker-known:hover .marker-dot { fill: #561b0b; }
+.marker-known:focus { outline: none; }
+.marker-unknown .marker-dot { fill: #4f4a55; stroke: #a49d92; }
+.marker-unknown { cursor: help; }
+
+.map-legend {
+  display: flex; flex-wrap: wrap; gap: .4rem 1.5rem;
+  margin: 0; padding: .55rem .5rem .2rem;
+  list-style: none;
+  color: var(--gold-soft); font-size: 1rem;
+}
+.map-legend li { display: flex; align-items: center; gap: .5rem; }
+.lg { display: inline-block; }
+.lg-route { width: 34px; border-top: 3px dashed #e0b9a0; }
+.lg-known { width: 14px; height: 14px; border-radius: 50%; background: #7b2914; border: 2px solid #f7eed6; }
+.lg-fog { width: 22px; height: 14px; border-radius: 7px; background: radial-gradient(#8c8792, #2c2930); }
+
+.map-places { margin-top: 2rem; }
+.map-places h2 { text-align: center; }
+
+@media (max-width: 640px) {
+  .map-viewport { height: min(62vh, 520px); }
+  .map-wrap { padding: 4px; margin: 0 -.5rem; }
+}

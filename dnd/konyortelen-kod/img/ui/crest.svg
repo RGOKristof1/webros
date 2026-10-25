@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="75%">
+      <stop offset="0" stop-color="#f5e9cb"/>
+      <stop offset="1" stop-color="#cdb07a"/>
+    </radialGradient>
+    <linearGradient id="sh" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8a3018"/>
+      <stop offset="1" stop-color="#4a160a"/>
+    </linearGradient>
+  </defs>
+  <rect width="240" height="300" fill="url(#bg)"/>
+  <rect x="10" y="10" width="220" height="280" fill="none" stroke="#6b4a22" stroke-width="2"/>
+  <rect x="16" y="16" width="208" height="268" fill="none" stroke="#6b4a22" stroke-width=".8"/>
+  <path d="M120 48l72 18v70c0 52-36 84-72 102-36-18-72-50-72-102V66z" fill="url(#sh)" stroke="#c9a55a" stroke-width="4"/>
+  <path d="M120 62l58 14v60c0 43-29 70-58 86-29-16-58-43-58-86V76z" fill="none" stroke="#e7c9a0" stroke-opacity=".5" stroke-width="1.5"/>
+  <g fill="none" stroke="#f0d9a8" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M108 102h24M120 92v10"/>
+    <path d="M104 110h32l-4 8v40l4 8h-32l4-8v-40z"/>
+    <path d="M114 124v28M126 124v28" stroke-width="2.5" stroke-opacity=".6"/>
+  </g>
+  <path d="M70 206q12-8 25 0t25 0 25 0 25 0" fill="none" stroke="#f0d9a8" stroke-opacity=".6" stroke-width="2.5"/>
+</svg>

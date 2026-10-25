@@ -1,0 +1,13 @@
+Könyörtelen köd – jelszavak
+(Ezt a fájlt NE töltsd fel a tárhelyre! Szándékosan van a konyortelen-kod mappán kívül.)
+
+Mesélői panel (pipák):
+chapter 1: 207
+chapter 2: 777
+chapter 3: 420
+chapter 4: 333
+ending: 666
+
+Levelek:
+letter 1 (Monk's Death Announcement): 111
+letter 2 (A sáros szállítólevél / The Muddy Bill of Lading): 3day

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="75%">
+      <stop offset="0" stop-color="#d9c79c"/>
+      <stop offset="1" stop-color="#8f7a55"/>
+    </radialGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="4"/></filter>
+  </defs>
+  <rect width="240" height="300" fill="url(#bg)"/>
+  <rect x="10" y="10" width="220" height="280" fill="none" stroke="#3b2a16" stroke-width="2"/>
+  <!-- antlers -->
+  <g fill="none" stroke="#2a1c0f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M104 112c-8-20-16-34-34-46M88 86c-12-2-20 4-28 2M78 74c-2-12 2-22 0-30"/>
+    <path d="M136 112c8-20 16-34 34-46M152 86c12-2 20 4 28 2M162 74c2-12-2-22 0-30"/>
+  </g>
+  <!-- head -->
+  <path d="M120 104c-22 0-32 14-30 32 2 16 14 30 18 56 2 10 6 16 12 16s10-6 12-16c4-26 16-40 18-56 2-18-8-32-30-32z" fill="#2a1c0f"/>
+  <path d="M96 118l-22-8 18 20zM144 118l22-8-18 20z" fill="#2a1c0f"/>
+  <!-- hollow eyes -->
+  <ellipse cx="108" cy="140" rx="5" ry="3" fill="#cfc8d6"/>
+  <ellipse cx="132" cy="140" rx="5" ry="3" fill="#cfc8d6"/>
+  <!-- mist -->
+  <g filter="url(#blur)" fill="#3a3540" opacity=".55">
+    <ellipse cx="70" cy="250" rx="70" ry="22"/>
+    <ellipse cx="170" cy="262" rx="80" ry="24"/>
+    <ellipse cx="120" cy="230" rx="50" ry="14"/>
+  </g>
+  <path d="M30 236q30-12 60 0t60 0 60 0" fill="none" stroke="#e8e2ee" stroke-opacity=".35" stroke-width="3"/>
+</svg>
