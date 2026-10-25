@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="hu" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaScript alapok – dolgozat-jegyzet</title>
+<meta name="description" content="Áttekinthető JavaScript jegyzet dolgozatra: típusok, vezérlési szerkezetek, adatszerkezetek, függvények – futtatható példákkal.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;600&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+<div class="progress-bar" id="readBar"></div>
+
+<header class="topbar">
+  <button class="icon-btn" id="menuBtn" aria-label="Tartalomjegyzék">☰</button>
+  <div class="title">JavaScript alapok · jegyzet</div>
+  <button class="icon-btn" id="themeBtn" aria-label="Téma váltása">🌙 Sötét</button>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar" aria-label="Tartalomjegyzék">
+    <div class="brand"><span class="logo">JS</span><div>jegyzet<small>dolgozatra készülőknek</small></div></div>
+    <div class="learned">
+      <div class="meter"><i id="meterFill"></i></div>
+      <span id="meterText"></span>
+    </div>
+    <nav id="nav"></nav>
+  </aside>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="hero">
+      <div class="eyebrow">2. feladat · Jegyzetkészítés</div>
+      <h1>JavaScript <mark>alapok</mark></h1>
+      <p class="sub">Egyetlen oldal, amit a dolgozat előtt elég átolvasni: rövid magyarázat, működő kód, tipikus hibák és kidolgozott önellenőrző kérdések.</p>
+      <div class="stats">
+        <div class="stat"><b>4</b><span>témakör</span></div>
+        <div class="stat"><b id="statTopics">–</b><span>téma</span></div>
+        <div class="stat"><b id="statCode">–</b><span>futtatható példa</span></div>
+        <div class="stat"><b>6</b><span>önellenőrző kérdés</span></div>
+      </div>
+      <div class="howto">
+        <div><b>▶ Futtasd a példákat</b>Minden kódblokk alatt kimenet jelenik meg, mintha a böngésző konzolját nézted volna.</div>
+        <div><b>✎ Szerkeszd a kódot</b>Kattints a kódba, írd át, és futtasd újra (Ctrl+Enter). Az „↺ Eredeti” visszaállítja.</div>
+        <div><b>✓ Jelöld, amit tudsz</b>A „Megtanultam?” gombbal követheted a haladásod – a böngésző megjegyzi.</div>
+      </div>
+    </section>
+
+    <!-- ================= 2.1 TÍPUSOK ================= -->
+    <section class="chapter" id="c1">
+      <header class="chapter-head">
+        <span class="num">2.1</span>
+        <div><h2>JavaScript típusok</h2><p>Milyen értékek léteznek, hogyan tároljuk és hasonlítjuk őket.</p></div>
+      </header>
+
+      <article class="topic" id="t-primitives" data-title="Primitív típusok">
+        <h3>Primitív típusok</h3>
+        <p>A primitív érték egyszerű, <strong>megváltoztathatatlan</strong> (immutable) adat. Amikor másik változóba másolod, az <strong>érték másolódik</strong>, nem egy hivatkozás. Hat fontos típus van (a <code>symbol</code>-lal együtt hét).</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Típus</th><th>Mit tárol</th><th>Példa</th></tr></thead>
+          <tbody>
+            <tr><td><code>number</code></td><td>Egész és tört számok is (64 bites lebegőpontos); ide tartozik a <code>NaN</code> és az <code>Infinity</code> is</td><td><code>42</code>, <code>3.14</code>, <code>-7</code></td></tr>
+            <tr><td><code>string</code></td><td>Szöveg, idézőjelek között (<code>'</code> <code>"</code> vagy visszaidézőjel)</td><td><code>"alma"</code>, <code>`Szia ${nev}`</code></td></tr>
+            <tr><td><code>boolean</code></td><td>Logikai érték: igaz vagy hamis</td><td><code>true</code>, <code>false</code></td></tr>
+            <tr><td><code>undefined</code></td><td>„Még nincs értéke” – ezt kapja egy változó, ha nem adtunk neki semmit</td><td><code>let x;</code></td></tr>
+            <tr><td><code>null</code></td><td>Szándékosan „üres / nincs ilyen” érték, ezt mi adjuk meg</td><td><code>let y = null;</code></td></tr>
+            <tr><td><code>bigint</code></td><td>Tetszőlegesen nagy egész, <code>n</code> végződéssel</td><td><code>123456789012345678901234567890n</code></td></tr>
+          </tbody>
+        </table></div>
+        <script type="text/plain" data-code data-run>
+let kor = 20;                       // number
+let tort = 3.14;                    // ugyanúgy number
+let nev = "Anna";                   // string
+let van = true;                     // boolean
+let semmi;                          // undefined (nem adtunk értéket)
+let ures = null;                    // null (szándékosan üres)
+let nagy = 12345678901234567890n;   // bigint
+
+console.log(typeof kor, typeof tort, typeof nev, typeof van, typeof semmi, typeof ures, typeof nagy);
+console.log(semmi, ures);
+console.log(nagy * 2n);
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>A számok lebegőpontosak, ezért <code>0.1 + 0.2</code> nem pontosan <code>0.3</code>. A <code>bigint</code> és a <code>number</code> nem keverhető egy műveletben.</p>
+        </div>
+        <script type="text/plain" data-code data-run>
+console.log(0.1 + 0.2);                  // 0.30000000000000004
+console.log(0.1 + 0.2 === 0.3);          // false!
+console.log(Math.abs(0.1 + 0.2 - 0.3) < Number.EPSILON); // true – így hasonlítunk
+
+try {
+  console.log(1n + 1);                   // number + bigint
+} catch (e) {
+  console.log(e.name + ": " + e.message);
+}
+        </script>
+      </article>
+
+      <article class="topic" id="t-reference" data-title="Referencia típusok">
+        <h3>Referencia (objektum) típusok</h3>
+        <p>Az <strong>objektum</strong>, a <strong>tömb</strong> és a <strong>függvény</strong> referencia típus. A változó nem magát az adatot, hanem egy <em>hivatkozást</em> (címet) tárol. Ha másik változóba másolod, <strong>ugyanarra az objektumra</strong> fog mutatni, ezért az egyiken át végzett módosítás a másikban is látszik.</p>
+        <script type="text/plain" data-code data-run>
+// primitív: érték szerinti másolás
+let p = 5;
+let q = p;
+q = 6;
+console.log(p, q);          // 5 6 – egymástól független
+
+// referencia: ugyanarra az objektumra mutat
+const a = { x: 1 };
+const b = a;
+b.x = 99;
+console.log(a.x);           // 99 – az "a" is megváltozott!
+
+// összehasonlításnál a hivatkozás számít, nem a tartalom
+console.log({} === {});             // false – két külön objektum
+console.log(a === b);               // true – ugyanaz az objektum
+
+// valódi másolat (sekély): spread
+const t = [1, 2, 3];
+const masolat = [...t];
+masolat.push(4);
+console.log(t, masolat);
+
+function koszon() {}
+console.log(typeof koszon, koszon instanceof Object);   // a függvény is objektum
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>Az <code>=</code> objektumnál <strong>nem másol</strong>. Két, azonos tartalmú objektum <code>===</code>-vel mégsem egyenlő. A <code>const</code> objektum tartalma módosítható, csak a változó nem irányítható át másik objektumra.</p>
+        </div>
+      </article>
+
+      <article class="topic" id="t-typeof" data-title="typeof operátor">
+        <h3>A <code>typeof</code> operátor és a meglepetések</h3>
+        <p>A <code>typeof</code> egy <em>szöveget</em> ad vissza, ami az érték típusát nevezi meg. Primitívekre jól működik, de van néhány történelmi furcsaság.</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Kifejezés</th><th>Eredmény</th><th>Megjegyzés</th></tr></thead>
+          <tbody>
+            <tr><td><code>typeof 42</code></td><td><code>"number"</code></td><td></td></tr>
+            <tr><td><code>typeof NaN</code></td><td><code>"number"</code></td><td>a NaN is szám típusú (a „Not a Number” is number…)</td></tr>
+            <tr><td><code>typeof "a"</code></td><td><code>"string"</code></td><td></td></tr>
+            <tr><td><code>typeof undefined</code></td><td><code>"undefined"</code></td><td>nem létező változóra sem dob hibát</td></tr>
+            <tr><td><code>typeof null</code></td><td><code>"object"</code></td><td><strong>régi hiba</strong> a nyelvben, kompatibilitás miatt maradt</td></tr>
+            <tr><td><code>typeof []</code></td><td><code>"object"</code></td><td>a tömb is objektum – tömbhöz <code>Array.isArray()</code></td></tr>
+            <tr><td><code>typeof {}</code></td><td><code>"object"</code></td><td></td></tr>
+            <tr><td><code>typeof function(){}</code></td><td><code>"function"</code></td><td>külön eredmény, bár technikailag objektum</td></tr>
+            <tr><td><code>typeof 5n</code></td><td><code>"bigint"</code></td><td></td></tr>
+          </tbody>
+        </table></div>
+        <script type="text/plain" data-code data-run>
+console.log(typeof null);                 // "object"  ← történelmi hiba
+console.log(typeof [], typeof {});        // object object
+console.log(typeof function () {});       // function
+console.log(typeof NaN);                  // number
+console.log(typeof nincsIlyenValtozo);    // undefined – nem dob hibát
+
+// helyes ellenőrzések:
+const x = null;
+console.log(x === null);                  // null vizsgálata
+console.log(Array.isArray([]), Array.isArray({}));   // tömb vizsgálata
+        </script>
+        <h4>Próbáld ki élőben!</h4>
+        <div class="playground">
+          <label for="pgInput">Írj be egy JavaScript kifejezést, vagy kattints egy példára:</label>
+          <div class="pg-row"><input id="pgInput" value="[]" spellcheck="false" autocomplete="off"><button class="icon-btn" id="pgRun" type="button">Kiértékel</button></div>
+          <div class="chips" id="pgChips"></div>
+          <div class="pg-out" id="pgOut"></div>
+        </div>
+      </article>
+
+      <article class="topic" id="t-var" data-title="var, let, const">
+        <h3><code>var</code>, <code>let</code>, <code>const</code></h3>
+        <p>Három módon deklarálhatunk változót. Ma az alapszabály: <strong>alapból <code>const</code></strong>, ha az értéke később változik, akkor <code>let</code>, a <code>var</code>-t pedig kerüld.</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Tulajdonság</th><th><code>var</code></th><th><code>let</code></th><th><code>const</code></th></tr></thead>
+          <tbody>
+            <tr><td>Hatókör</td><td>függvény</td><td>blokk (<code>{ }</code>)</td><td>blokk (<code>{ }</code>)</td></tr>
+            <tr><td>Újradeklarálás ugyanott</td><td>lehet</td><td>nem (SyntaxError)</td><td>nem (SyntaxError)</td></tr>
+            <tr><td>Újraértékadás</td><td>lehet</td><td>lehet</td><td>nem (TypeError)</td></tr>
+            <tr><td>Kötelező kezdőérték</td><td>nem</td><td>nem</td><td>igen</td></tr>
+            <tr><td>Hoisting (felemelés)</td><td>igen, <code>undefined</code> értékkel</td><td>felemelve, de a deklarációig tiltott (TDZ)</td><td>ugyanúgy TDZ</td></tr>
+          </tbody>
+        </table></div>
+        <script type="text/plain" data-code data-run>
+if (true) {
+  var v = "var";
+  let l = "let";
+  const c = "const";
+}
+console.log(v);                    // "var" – kilátszik a blokkból
+console.log(typeof l, typeof c);   // undefined undefined – blokkon kívül nem léteznek
+
+var x = 1; var x = 2;              // var: újradeklarálható
+console.log(x);
+
+let y = 1; y = 5;                  // let: újraértékelhető
+console.log(y);
+
+const PI = 3.14;
+try { PI = 3; } catch (e) { console.log(e.name + ": " + e.message); }
+
+const lista = [1, 2];
+lista.push(3);                     // a const objektum TARTALMA módosítható
+console.log(lista);
+
+console.log(h);                    // undefined (hoisting)
+var h = 5;
+try { console.log(k); } catch (e) { console.log(e.name); }   // ReferenceError (TDZ)
+let k = 1;
+        </script>
+        <div class="callout warn"><strong>Klasszikus buktató: <code>var</code> a ciklusban</strong>
+          <p>A <code>var</code> ciklusváltozó az egész függvényben ugyanaz, a <code>let</code> viszont minden körben új példány.</p></div>
+        <script type="text/plain" data-code data-run>
+var fv = [];
+for (var i = 0; i < 3; i++) fv.push(() => i);
+
+let fl = [];
+for (let j = 0; j < 3; j++) fl.push(() => j);
+
+console.log(fv.map(f => f()));   // [3, 3, 3] – mind ugyanazt az i-t látja
+console.log(fl.map(f => f()));   // [0, 1, 2] – minden körnek saját j-je van
+        </script>
+      </article>
+
+      <article class="topic" id="t-conv" data-title="Típuskonverzió">
+        <h3>Típuskonverzió</h3>
+        <p>A JavaScript <strong>gyengén típusos</strong>: ha a művelethez más típus kellene, magától átalakítja az értéket (<em>implicit</em> konverzió). Ha mi kérjük az átalakítást, az <em>explicit</em> konverzió, ez átláthatóbb, ezért érdemes ezt használni.</p>
+        <h4>Implicit (automatikus)</h4>
+        <ul>
+          <li><code>+</code>: ha bármelyik oldal szöveg, <strong>összefűz</strong> (a szám szöveggé válik).</li>
+          <li><code>-</code>, <code>*</code>, <code>/</code>: mindig <strong>számmá</strong> alakít.</li>
+          <li><code>if</code>, <code>!</code>, <code>&amp;&amp;</code>: logikai értékké alakít (truthy/falsy).</li>
+        </ul>
+        <script type="text/plain" data-code data-run>
+console.log("5" + 1);       // "51"  – összefűzés
+console.log("5" - 1);       // 4     – számként számol
+console.log("5" * "2");     // 10
+console.log(true + 1);      // 2
+console.log(null + 1);      // 1
+console.log(undefined + 1); // NaN
+console.log([] + []);       // "" (üres szöveg)
+console.log(1 + 2 + "3");   // "33" – balról jobbra: előbb 3, aztán összefűzés
+        </script>
+        <h4>Explicit (kézi)</h4>
+        <script type="text/plain" data-code data-run>
+console.log(Number("42"), Number("  7 "), Number(""), Number("12px"), Number(true), Number(null), Number(undefined));
+console.log(String(123), String(true), String(null), (255).toString(16));
+console.log(Boolean(""), Boolean("0"), !!"szia");     // !! – gyors Boolean konverzió
+
+// parseInt / parseFloat: az elejéből olvassa ki a számot, ami még szám
+console.log(parseInt("42px"), parseInt("3.99"), parseInt("abc"), parseInt("101", 2));
+console.log(parseFloat("3.14abc"), Number("3.14abc"));   // 3.14 NaN
+console.log(+"8", -"8");                                 // egyoperandusú + : gyors Number()
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p><code>Number()</code> szigorú („12px” → <code>NaN</code>), a <code>parseInt()</code> megengedő („12px” → <code>12</code>). A <code>parseInt</code> másik paramétere a számrendszer, ezért <code>["1","2","3"].map(parseInt)</code> meglepő eredményt ad:</p></div>
+        <script type="text/plain" data-code data-run>
+console.log(["1", "2", "3"].map(parseInt));   // [1, NaN, NaN] – a map átadja az indexet is!
+console.log(["1", "2", "3"].map(Number));     // [1, 2, 3]
+console.log(["1", "2", "3"].map(s => parseInt(s, 10)));   // [1, 2, 3]
+        </script>
+      </article>
+
+      <article class="topic" id="t-eq" data-title="== és ===">
+        <h3><code>==</code> és <code>===</code></h3>
+        <p>A <code>==</code> (laza egyenlőség) összehasonlítás előtt <strong>típuskonverziót</strong> végez, a <code>===</code> (szigorú egyenlőség) <strong>típust és értéket</strong> is vizsgál, konverzió nélkül. Ugyanez igaz a <code>!=</code> és <code>!==</code> párra.</p>
+        <script type="text/plain" data-code data-run>
+console.log(5 == "5", 5 === "5");              // true false
+console.log(0 == false, 0 === false);          // true false
+console.log("" == 0, "" === 0);                // true false
+console.log(null == undefined, null === undefined);  // true false
+console.log(null == 0);                        // false – a null csak undefined-dal "==" egyenlő
+console.log(NaN == NaN, NaN === NaN);          // false false – a NaN semmivel sem egyenlő
+console.log([] == false, [1] == 1);            // true true (zavaros!)
+console.log({} === {});                        // false – külön objektumok
+console.log(Object.is(NaN, NaN));              // true
+        </script>
+        <div class="callout tip"><strong>Jegyezd meg</strong>
+          <p>Alapszabály: <strong>mindig <code>===</code></strong>. Az egyetlen elfogadott kivétel az <code>x == null</code>, ami egyszerre vizsgálja a <code>null</code>-t és az <code>undefined</code>-ot. A <code>NaN</code> ellenőrzéséhez <code>Number.isNaN(x)</code> kell.</p></div>
+      </article>
+
+      <article class="topic" id="t-truthy" data-title="Truthy és falsy">
+        <h3>Truthy és falsy értékek</h3>
+        <p>Ha feltételben (<code>if</code>, <code>&amp;&amp;</code>, <code>!</code>) nem logikai értéket használsz, a JS <code>Boolean</code>-ná alakítja. Összesen <strong>8 falsy</strong> érték van, <strong>minden más truthy</strong>.</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Falsy (hamisnak számít)</th><th>Truthy – gyakran tévesztik</th></tr></thead>
+          <tbody><tr>
+            <td><code>false</code><br><code>0</code> és <code>-0</code><br><code>0n</code> (bigint nulla)<br><code>""</code> (üres string)<br><code>null</code><br><code>undefined</code><br><code>NaN</code></td>
+            <td><code>"0"</code> (nem üres szöveg)<br><code>"false"</code><br><code>" "</code> (szóköz)<br><code>[]</code> (üres tömb)<br><code>{}</code> (üres objektum)<br><code>-1</code>, <code>Infinity</code><br>minden függvény</td>
+          </tr></tbody>
+        </table></div>
+        <script type="text/plain" data-code data-run>
+const vizsgal = [
+  ["false", false], ["0", 0], ["-0", -0], ["0n", 0n], ['""', ""],
+  ["null", null], ["undefined", undefined], ["NaN", NaN],
+  ['"0"', "0"], ['"false"', "false"], ['" "', " "],
+  ["[]", []], ["{}", {}], ["-1", -1], ["Infinity", Infinity]
+];
+for (const [nev, ertek] of vizsgal) {
+  console.log(nev.padEnd(10), "→", ertek ? "truthy" : "falsy");
+}
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>Az üres tömb <code>[]</code> truthy! Tömb üres voltát így vizsgáld: <code>if (lista.length === 0)</code>. Ha a <code>0</code> vagy az <code>""</code> érvényes érték, ne a truthy/falsy-ra támaszkodj (ld. <code>??</code> a 2.2-ben).</p></div>
+      </article>
+
+      <article class="topic" id="t-special" data-title="NaN és Infinity">
+        <h3>Speciális értékek: <code>NaN</code>, <code>Infinity</code></h3>
+        <p><code>NaN</code> (Not a Number) azt jelzi, hogy egy számolás értelmetlen volt. <code>Infinity</code> a végtelen, pl. nullával osztáskor keletkezik. JS-ben a nullával osztás nem dob hibát.</p>
+        <script type="text/plain" data-code data-run>
+console.log(0 / 0, 1 / 0, -1 / 0);                 // NaN Infinity -Infinity
+console.log(Number("abc"), Math.sqrt(-1));        // NaN NaN
+console.log(Infinity - Infinity);                  // NaN
+
+console.log(NaN === NaN);                          // false – önmagával sem egyenlő!
+console.log(Number.isNaN(NaN));                    // true – ezt használd
+console.log(Number.isNaN("abc"), isNaN("abc"));    // false true – a régi isNaN előbb számmá alakít
+
+console.log(typeof NaN, typeof Infinity);          // number number
+console.log(Number.isFinite(1 / 0), Number.isFinite(5));
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>A <code>NaN</code> „fertőz”: bármilyen művelet vele <code>NaN</code>-t ad. Mindig <code>Number.isNaN()</code>-nal ellenőrizd, a <code>== NaN</code> sosem lesz igaz.</p></div>
+      </article>
+    </section>
+
+    <!-- ================= 2.2 VEZÉRLÉSI SZERKEZETEK ================= -->
+    <section class="chapter" id="c2">
+      <header class="chapter-head">
+        <span class="num">2.2</span>
+        <div><h2>Vezérlési szerkezetek</h2><p>Elágazások, ciklusok, hibakezelés: a program útvonalának irányítása.</p></div>
+      </header>
+
+      <article class="topic" id="t-if" data-title="if és switch">
+        <h3>Elágazások: <code>if</code> és <code>switch</code></h3>
+        <p>Az <code>if</code> a feltétel alapján dönt, az <code>else if</code> további feltételeket vizsgál, az <code>else</code> a „minden más” ág. A <code>switch</code> egyetlen értéket hasonlít össze több <code>case</code>-szel (<code>===</code> módon).</p>
+        <script type="text/plain" data-code data-run>
+const pont = 78;
+if (pont >= 90) {
+  console.log("jeles (5)");
+} else if (pont >= 75) {
+  console.log("jó (4)");
+} else if (pont >= 60) {
+  console.log("közepes (3)");
+} else {
+  console.log("elégtelen (1)");
+}
+        </script>
+        <p>A <code>break</code> szerepe: kilép a <code>switch</code>-ből. Ha elmarad, a végrehajtás <strong>továbbcsúszik</strong> a következő <code>case</code>-be is (fall-through).</p>
+        <script type="text/plain" data-code data-run>
+const gyumolcs = "alma";
+switch (gyumolcs) {
+  case "alma":
+    console.log("alma");          // nincs break → lecsúszik!
+  case "körte":
+    console.log("körte (ez már a lecsúszás)");
+    break;
+  case "szilva":
+    console.log("szilva");
+    break;
+  default:
+    console.log("ismeretlen");
+}
+
+// összevont esetek – itt a "lecsúszás" hasznos:
+function napTipus(n) {
+  switch (n) {
+    case 6:
+    case 7:
+      return "hétvége";
+    default:
+      return "hétköznap";
+  }
+}
+console.log(napTipus(7), napTipus(2));
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>Elfelejtett <code>break</code> az egyik leggyakoribb hiba. Az <code>=</code> az <code>if</code> feltételében értékadás, nem összehasonlítás (<code>if (x = 5)</code> mindig igaz!). A <code>switch</code> szigorúan (<code>===</code>) hasonlít: a <code>"1"</code> nem azonos az <code>1</code>-gyel.</p></div>
+      </article>
+
+      <article class="topic" id="t-ternary" data-title="Ternáris operátor">
+        <h3>Feltételes (ternáris) operátor</h3>
+        <p>Az <code>feltétel ? a : b</code> egy <strong>kifejezés</strong>, ami értéket ad: ha a feltétel igaz, <code>a</code>, különben <code>b</code>. Rövid, értékadásra kiváló <code>if/else</code>-helyettesítő.</p>
+        <script type="text/plain" data-code data-run>
+const kor = 20;
+const kategoria = kor >= 18 ? "felnőtt" : "kiskorú";
+console.log(kategoria);
+
+console.log(`Van ${3} elem${3 === 1 ? "" : "ek"}`);   // beágyazva szövegbe is jó
+
+// láncolható, de ne vidd túlzásba:
+const jegy = 85;
+const szoveg = jegy >= 90 ? "jeles" : jegy >= 75 ? "jó" : "közepes";
+console.log(szoveg);
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>Három-négy szintnél mélyebb ternáris lánc olvashatatlan, ott használj <code>if/else</code>-t. A ternárisnak mindkét ágat meg kell adni.</p></div>
+      </article>
+
+      <article class="topic" id="t-logic" data-title="Logikai operátorok, ??, ?.">
+        <h3>Logikai operátorok: <code>&amp;&amp;</code>, <code>||</code>, <code>!</code>, <code>??</code>, <code>?.</code></h3>
+        <ul>
+          <li><code>&amp;&amp;</code> (ÉS): az első <em>falsy</em> értéket adja vissza, ha nincs, az utolsót.</li>
+          <li><code>||</code> (VAGY): az első <em>truthy</em> értéket adja vissza, ha nincs, az utolsót. Ezért használják alapértelmezett értékre.</li>
+          <li><code>!</code> (NEM): negál, mindig <code>boolean</code>-t ad.</li>
+          <li><code>??</code> (nullish coalescing): a bal oldalt adja, <strong>csak ha az nem <code>null</code>/<code>undefined</code></strong>, különben a jobb oldalt.</li>
+          <li><code>?.</code> (optional chaining): ha a bal oldal <code>null</code>/<code>undefined</code>, <strong>nem dob hibát</strong>, hanem <code>undefined</code>-ot ad.</li>
+        </ul>
+        <script type="text/plain" data-code data-run>
+console.log(true && false, true || false, !true);
+
+// && és || nem boolean-t, hanem az egyik OPERANDUST adja vissza
+console.log("a" && "b", 0 && "b");        // b 0
+console.log("" || "alap", "x" || "y");    // alap x
+
+// || vs ??
+const db = 0;
+console.log(db || 10);    // 10 – a 0 falsy, ezért felülírja (valószínűleg hiba!)
+console.log(db ?? 10);    // 0  – a ?? csak null/undefined esetén cserél
+
+const nev = null;
+console.log(nev ?? "névtelen");
+
+// optional chaining
+const user = { cim: { varos: "Győr" } };
+console.log(user.cim?.varos);             // Győr
+console.log(user.telefon?.szam);          // undefined (hiba helyett)
+console.log(user.telefon?.szam ?? "nincs megadva");
+
+try { console.log(user.telefon.szam); }   // ?. nélkül TypeError
+catch (e) { console.log(e.name); }
+
+const fn = undefined;
+console.log(fn?.());                      // undefined – függvényhívásnál is működik
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>Alapértelmezett értéknél a <code>||</code> a <code>0</code>-t, <code>""</code>-t, <code>false</code>-t is „hiányzónak” veszi. Ha ezek érvényes értékek, használj <code>??</code>-t. Az <code>&amp;&amp;</code> és <code>||</code> <strong>rövidzárat</strong> alkalmaz: ha a bal oldal már eldönti az eredményt, a jobb oldal ki sem értékelődik.</p></div>
+      </article>
+
+      <article class="topic" id="t-loops1" data-title="for, while, do...while">
+        <h3>Ciklusok: <code>for</code>, <code>while</code>, <code>do...while</code></h3>
+        <ul>
+          <li><code>for</code>: ha tudod, hányszor kell lefutnia (számláló). Három rész: <code>kezdés; feltétel; léptetés</code>.</li>
+          <li><code>while</code>: addig fut, amíg a feltétel igaz. A feltételt <strong>belépés előtt</strong> vizsgálja, így akár egyszer sem fut le.</li>
+          <li><code>do...while</code>: a feltételt <strong>a törzs után</strong> vizsgálja, így <strong>legalább egyszer mindig lefut</strong>.</li>
+        </ul>
+        <script type="text/plain" data-code data-run>
+for (let i = 1; i <= 3; i++) {
+  console.log("for:", i);
+}
+
+let n = 3;
+while (n > 0) {
+  console.log("while:", n);
+  n--;
+}
+
+let m = 10;
+do {
+  console.log("do...while: egyszer lefut, pedig m =", m);
+  m++;
+} while (m < 5);
+
+let m2 = 10;
+while (m2 < 5) {
+  console.log("ez soha nem íródik ki");
+}
+console.log("vége");
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p><strong>Végtelen ciklus</strong>: elfelejted léptetni a változót (<code>n--</code>), és a feltétel örökké igaz marad. <strong>Eggyel elcsúszás</strong> (off-by-one): <code>i &lt;= tomb.length</code> túlindexel, tömbnél <code>i &lt; tomb.length</code> a helyes.</p></div>
+      </article>
+
+      <article class="topic" id="t-loops2" data-title="for...of és for...in">
+        <h3><code>for...of</code> és <code>for...in</code></h3>
+        <ul>
+          <li><code>for...of</code>: <strong>értékeket</strong> járja be <em>iterálható</em> dolgokon: tömb, string, Set, Map. Ezt használd tömbökhöz.</li>
+          <li><code>for...in</code>: egy objektum <strong>kulcsait</strong> (tulajdonságneveit) járja be. Objektumhoz való.</li>
+        </ul>
+        <script type="text/plain" data-code data-run>
+const tomb = ["a", "b", "c"];
+
+for (const elem of tomb) console.log("of:", elem);        // értékek: a b c
+for (const [i, elem] of tomb.entries()) console.log(i, elem);   // index + érték
+for (const betu of "hej") console.log(betu);              // stringen is jó
+
+for (const i in tomb) console.log("in:", i, typeof i);    // indexek, de SZÖVEGKÉNT!
+
+const auto = { marka: "Opel", ev: 2010 };
+for (const kulcs in auto) console.log(kulcs, "=", auto[kulcs]);
+        </script>
+        <div class="callout warn"><strong>Miért nem ajánlott <code>for...in</code> tömbökre?</strong>
+          <ul>
+            <li>Az indexeket <strong>szövegként</strong> adja (<code>"0"</code>, <code>"1"</code>…), nem számként.</li>
+            <li>Az <strong>örökölt</strong> (prototípusra felvett) tulajdonságokat is bejárja, nem csak az elemeket.</li>
+            <li>A bejárási sorrend nem garantált, és lassabb is, mint a <code>for</code> / <code>for...of</code>.</li>
+          </ul></div>
+        <script type="text/plain" data-code data-run>
+Array.prototype.extra = "nem elem!";     // valaki kiegészítette a tömb prototípusát...
+try {
+  const t = [10, 20];
+  for (const i in t) console.log("for...in:", i);   // ...és megjelenik a "extra" is
+  for (const v of t) console.log("for...of:", v);   // ...a for...of nem érzi meg
+} finally {
+  delete Array.prototype.extra;           // takarítunk, hogy ne maradjon nyoma
+}
+        </script>
+      </article>
+
+      <article class="topic" id="t-break" data-title="break és continue">
+        <h3><code>break</code> és <code>continue</code></h3>
+        <p><code>break</code>: azonnal <strong>kilép</strong> a ciklusból. <code>continue</code>: <strong>átugorja</strong> a ciklus hátralévő részét, és a következő körrel folytatja.</p>
+        <script type="text/plain" data-code data-run>
+for (let i = 1; i <= 10; i++) {
+  if (i % 2 === 0) continue;   // párosat kihagyjuk
+  if (i > 7) break;            // 7 fölött kilépünk
+  console.log(i);              // 1 3 5 7
+}
+
+// keresés: az első találatnál megállunk
+const nevek = ["Anna", "Béla", "Cili", "Dani"];
+for (const nev of nevek) {
+  if (nev.startsWith("C")) {
+    console.log("Megvan:", nev);
+    break;
+  }
+}
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>A <code>forEach</code>-ben <strong>nem működik</strong> a <code>break</code> és a <code>continue</code> (az egy függvény!). Ott a <code>return</code> csak az aktuális körből lép ki, vagyis <code>continue</code>-ként viselkedik.</p></div>
+        <script type="text/plain" data-code data-run>
+[1, 2, 3].forEach(x => {
+  if (x === 2) return;     // = continue, a ciklus nem áll meg
+  console.log(x);          // 1 3
+});
+        </script>
+      </article>
+
+      <article class="topic" id="t-errors" data-title="Hibakezelés">
+        <h3>Hibakezelés: <code>try...catch...finally</code>, <code>throw</code></h3>
+        <ul>
+          <li><code>try</code>: ide kerül a kockázatos kód.</li>
+          <li><code>catch (hiba)</code>: csak akkor fut le, ha a <code>try</code>-ban hiba keletkezett.</li>
+          <li><code>finally</code>: <strong>mindig lefut</strong>, hiba esetén is (takarításra jó).</li>
+          <li><code>throw</code>: saját hibát váltunk ki, ilyenkor a futás azonnal a <code>catch</code>-re ugrik.</li>
+        </ul>
+        <script type="text/plain" data-code data-run>
+function oszt(a, b) {
+  if (b === 0) throw new Error("Nullával nem osztunk!");
+  return a / b;
+}
+
+try {
+  console.log(oszt(10, 2));
+  console.log(oszt(1, 0));              // itt hiba keletkezik
+  console.log("ez a sor már nem fut le");
+} catch (hiba) {
+  console.log("Elkaptam:", hiba.message);
+} finally {
+  console.log("finally: ez mindig lefut");
+}
+
+// beépített hibatípusok
+try { undefined.nev; } catch (e) { console.log(e.name); }          // TypeError
+try { nincsIlyen + 1; } catch (e) { console.log(e.name); }        // ReferenceError
+try { JSON.parse("{rossz json"); } catch (e) { console.log(e.name); }   // SyntaxError
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>Mindig <code>Error</code> objektumot dobj (<code>throw new Error("...")</code>), ne sima szöveget, mert az <code>Error</code> hordozza a <code>name</code>, <code>message</code> és a hívási láncot (stack). A <code>try...catch</code> csak <strong>futásidejű</strong> hibákat kap el, a szintaktikai hibát nem.</p></div>
+      </article>
+    </section>
+
+    <!-- ================= 2.3 ADATSZERKEZETEK ================= -->
+    <section class="chapter" id="c3">
+      <header class="chapter-head">
+        <span class="num">2.3</span>
+        <div><h2>Adatszerkezetek</h2><p>Tömb, Set, Map és Object: melyiket mikor használd.</p></div>
+      </header>
+
+      <article class="topic" id="t-arr-basic" data-title="Tömb: alapok">
+        <h3>Tömbök (Array): létrehozás, elérés, <code>length</code></h3>
+        <p>A tömb <strong>rendezett lista</strong>, az elemeit <strong>0-tól induló indexszel</strong> érjük el. A <code>length</code> az elemek száma, és írható is: csökkentésével a tömb végét levághatjuk.</p>
+        <script type="text/plain" data-code data-run>
+const gyumolcsok = ["alma", "körte", "szilva"];     // literál – ez a leggyakoribb
+console.log(gyumolcsok[0]);                          // alma (első elem)
+console.log(gyumolcsok[gyumolcsok.length - 1]);      // szilva (utolsó elem)
+console.log(gyumolcsok.at(-1));                      // szilva – .at() negatív indexszel is megy
+console.log(gyumolcsok.length);                      // 3
+
+gyumolcsok[1] = "barack";                            // elem módosítása
+console.log(gyumolcsok);
+
+console.log(gyumolcsok[10]);                         // undefined – nincs hiba, csak nincs ilyen elem
+gyumolcsok.length = 2;                               // a vége levágódik
+console.log(gyumolcsok);
+
+console.log(new Array(3).fill(0));                   // [0, 0, 0]
+console.log(Array.from({ length: 4 }, (_, i) => i * 2));   // [0, 2, 4, 6]
+console.log([1, "szöveg", true, [2, 3], { a: 1 }]);        // vegyes típusok is lehetnek
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>A <code>typeof []</code> <code>"object"</code>, tömbhöz használd az <code>Array.isArray()</code>-t. A <code>tomb[-1]</code> <strong>nem</strong> az utolsó elem (az <code>undefined</code>), arra a <code>.at(-1)</code> való. A <code>const</code> tömb elemei módosíthatók.</p></div>
+      </article>
+
+      <article class="topic" id="t-arr-mut" data-title="Módosító metódusok">
+        <h3>Módosító metódusok: <code>push</code>, <code>pop</code>, <code>shift</code>, <code>unshift</code>, <code>splice</code>, <code>sort</code>, <code>reverse</code></h3>
+        <p>Ezek <strong>magát a tömböt változtatják meg</strong> (in-place).</p>
+        <script type="text/plain" data-code data-run>
+const t = [1, 2, 3];
+t.push(4);                      // végére: [1, 2, 3, 4]
+console.log(t);
+console.log(t.pop(), t);        // 4 [1, 2, 3]  – a végéről vesz ki
+console.log(t.shift(), t);      // 1 [2, 3]     – az elejéről vesz ki
+t.unshift(0);                   // elejére: [0, 2, 3]
+console.log(t);
+
+// splice(kezdőindex, hányat törölj, ...beszúrandó elemek)
+const s = [10, 20, 30, 40, 50];
+console.log(s.splice(1, 2), s);   // [20, 30] kivéve → s: [10, 40, 50]
+s.splice(1, 0, 15, 17);           // 0 törlés + beszúrás
+console.log(s);                   // [10, 15, 17, 40, 50]
+s.splice(0, 1, 99);               // csere az elején
+console.log(s);                   // [99, 15, 17, 40, 50]
+
+console.log([1, 2, 3].reverse());   // [3, 2, 1]
+        </script>
+        <div class="callout warn"><strong>Buktató: a <code>sort()</code> alapból szövegként rendez!</strong>
+          <p>Számoknál mindig adj meg összehasonlító függvényt: <code>(a, b) =&gt; a - b</code> növekvő, <code>(a, b) =&gt; b - a</code> csökkenő sorrendhez.</p></div>
+        <script type="text/plain" data-code data-run>
+const szamok = [10, 9, 1, 100];
+console.log([...szamok].sort());                    // [1, 10, 100, 9] – szövegként: "10" < "9"
+console.log([...szamok].sort((a, b) => a - b));     // [1, 9, 10, 100] – helyes
+console.log([...szamok].sort((a, b) => b - a));     // [100, 10, 9, 1]
+console.log(["körte", "alma", "dió"].sort());       // szövegeknél jó az alapértelmezett
+
+// a sort, reverse az eredeti tömböt módosítja – ha meg akarod tartani, előbb másolj:
+const eredeti = [3, 1, 2];
+const rendezett = [...eredeti].sort((a, b) => a - b);
+console.log(eredeti, rendezett);
+        </script>
+      </article>
+
+      <article class="topic" id="t-arr-nonmut" data-title="Nem módosító metódusok">
+        <h3>Nem módosító metódusok: <code>slice</code>, <code>concat</code>, <code>includes</code>, <code>indexOf</code>, <code>join</code></h3>
+        <p>Ezek <strong>az eredeti tömböt érintetlenül hagyják</strong>, és új értéket (új tömböt, számot, szöveget, logikai értéket) adnak vissza.</p>
+        <script type="text/plain" data-code data-run>
+const a = [1, 2, 3, 4, 5];
+
+console.log(a.slice(1, 3));        // [2, 3] – a vég indexe már NEM tartozik bele
+console.log(a.slice(-2));          // [4, 5] – az utolsó kettő
+console.log(a.slice());            // teljes másolat
+
+console.log(a.concat([6, 7], 8));  // [1, 2, 3, 4, 5, 6, 7, 8]
+
+console.log(a.includes(3), a.includes(9));   // true false
+console.log(a.indexOf(4), a.indexOf(9));     // 3 -1  (-1 = nincs találat)
+
+console.log(a.join("-"));          // "1-2-3-4-5"
+console.log(a.join(""));           // "12345"
+console.log([1, [2, 3]].join());   // "1,2,3" – alapértelmezett elválasztó: vessző
+
+console.log(a);                    // változatlan: [1, 2, 3, 4, 5]
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>A <code>slice</code> (másol) és a <code>splice</code> (módosít) neve megtévesztően hasonló! Az <code>indexOf</code> <code>-1</code>-et ad találat hiányában, ezért <code>if (a.indexOf(x))</code> hibás, helyette <code>includes</code> vagy <code>!== -1</code>. Az <code>includes</code> a <code>NaN</code>-t megtalálja, az <code>indexOf</code> nem:</p></div>
+        <script type="text/plain" data-code data-run>
+console.log([NaN].includes(NaN), [NaN].indexOf(NaN));   // true -1
+console.log([1, 2, 3].indexOf(1));                      // 0 – ez falsy, ezért if() nem jó rá!
+        </script>
+      </article>
+
+      <article class="topic" id="t-arr-hof" data-title="forEach, map, filter">
+        <h3>Magasabb rendű függvények: <code>forEach</code>, <code>map</code>, <code>filter</code></h3>
+        <p>„Magasabb rendű”, mert <strong>függvényt (callbacket) kapnak paraméterül</strong>. A callback minden elemre lefut, paraméterei: <code>(elem, index, tomb)</code>.</p>
+        <ul>
+          <li><code>forEach</code>: végigmegy az elemeken, <em>nem ad vissza semmit</em> (mellékhatásra való: kiírás, módosítás).</li>
+          <li><code>map</code>: minden elemből <strong>újat készít</strong>, az eredmény ugyanolyan hosszú <strong>új tömb</strong>.</li>
+          <li><code>filter</code>: csak azokat tartja meg, amelyekre a callback <em>truthy</em>-t ad, <strong>új tömb</strong>, akár rövidebb.</li>
+        </ul>
+        <script type="text/plain" data-code data-run>
+const szamok = [1, 2, 3, 4, 5, 6];
+
+szamok.forEach((x, i) => console.log(i, x * 2));
+
+const duplak = szamok.map(x => x * 2);
+const parosak = szamok.filter(x => x % 2 === 0);
+console.log(duplak);
+console.log(parosak);
+console.log(szamok);                       // az eredeti változatlan
+
+// objektumtömbökön – itt igazán hasznos
+const emberek = [
+  { nev: "Anna", kor: 17 },
+  { nev: "Béla", kor: 25 },
+  { nev: "Cili", kor: 31 }
+];
+const nevek = emberek.map(e => e.nev);
+const felnottNevek = emberek.filter(e => e.kor >= 18).map(e => e.nev);   // láncolás
+console.log(nevek, felnottNevek);
+
+const r1 = szamok.forEach(x => x);
+const r2 = szamok.map(x => x);
+console.log(r1, r2);                       // undefined [1, 2, 3, 4, 5, 6]
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>Ha a <code>map</code> callbackjében <code>{ }</code> törzset használsz, <strong>ki kell írnod a <code>return</code>-t</strong>, különben <code>undefined</code> elemeket kapsz. A <code>filter</code> mindig tömböt ad vissza (nincs találat → <code>[]</code>), az egyetlen elem megtalálására a <code>find</code> való.</p></div>
+        <script type="text/plain" data-code data-run>
+console.log([1, 2, 3].map(x => { x * 2; }));        // [undefined, undefined, undefined] – elfelejtett return
+console.log([1, 2, 3].map(x => { return x * 2; })); // [2, 4, 6]
+console.log([1, 2, 3].filter(x => x > 5));          // [] – nem undefined
+        </script>
+      </article>
+
+      <article class="topic" id="t-arr-table" data-title="Tömbmetódusok táblázata">
+        <h3>Összefoglaló táblázat: tömbmetódusok</h3>
+        <p>Ez a dolgozat egyik legfontosabb „puska” táblázata. A <span class="badge yes">igen</span> azt jelenti, az eredeti tömböt módosítja, a <span class="badge no">nem</span> azt, hogy érintetlenül hagyja.</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Metódus</th><th>Mit csinál</th><th>Mit ad vissza</th><th>Módosítja az eredetit?</th></tr></thead>
+          <tbody>
+            <tr class="group-row"><td colspan="4">Módosítók</td></tr>
+            <tr><td><code>push(...elemek)</code></td><td>Elemeket tesz a tömb <strong>végére</strong></td><td>az új hossz (<code>number</code>)</td><td><span class="badge yes">igen</span></td></tr>
+            <tr><td><code>pop()</code></td><td>Kiveszi az <strong>utolsó</strong> elemet</td><td>a kivett elem (üres tömbnél <code>undefined</code>)</td><td><span class="badge yes">igen</span></td></tr>
+            <tr><td><code>shift()</code></td><td>Kiveszi az <strong>első</strong> elemet</td><td>a kivett elem</td><td><span class="badge yes">igen</span></td></tr>
+            <tr><td><code>unshift(...elemek)</code></td><td>Elemeket tesz az <strong>elejére</strong></td><td>az új hossz</td><td><span class="badge yes">igen</span></td></tr>
+            <tr><td><code>splice(start, törlés, ...új)</code></td><td>Töröl / beszúr / cserél a megadott helyen</td><td>a <strong>törölt elemek</strong> tömbje</td><td><span class="badge yes">igen</span></td></tr>
+            <tr><td><code>sort(fn?)</code></td><td>Rendez (alapból <em>szövegként</em>!)</td><td>ugyanaz a (most már rendezett) tömb</td><td><span class="badge yes">igen</span></td></tr>
+            <tr><td><code>reverse()</code></td><td>Megfordítja a sorrendet</td><td>ugyanaz a (megfordított) tömb</td><td><span class="badge yes">igen</span></td></tr>
+            <tr class="group-row"><td colspan="4">Nem módosítók</td></tr>
+            <tr><td><code>slice(start, vég)</code></td><td>Másolatot készít egy szakaszról (a vég nem tartozik bele)</td><td>új tömb</td><td><span class="badge no">nem</span></td></tr>
+            <tr><td><code>concat(...)</code></td><td>Tömböket / elemeket fűz össze</td><td>új tömb</td><td><span class="badge no">nem</span></td></tr>
+            <tr><td><code>includes(x)</code></td><td>Megnézi, tartalmazza-e az értéket</td><td><code>true</code> / <code>false</code></td><td><span class="badge no">nem</span></td></tr>
+            <tr><td><code>indexOf(x)</code></td><td>Az első találat indexét keresi</td><td>index, vagy <code>-1</code> ha nincs</td><td><span class="badge no">nem</span></td></tr>
+            <tr><td><code>join(elválasztó)</code></td><td>Az elemeket egyetlen szöveggé fűzi</td><td><code>string</code></td><td><span class="badge no">nem</span></td></tr>
+            <tr class="group-row"><td colspan="4">Callback-es</td></tr>
+            <tr><td><code>forEach(fn)</code></td><td>Minden elemre lefuttatja a függvényt</td><td><code>undefined</code></td><td><span class="badge no">nem</span> (maga nem, de a callback módosíthat)</td></tr>
+            <tr><td><code>map(fn)</code></td><td>Minden elemből újat készít</td><td>új tömb, <strong>ugyanolyan hosszú</strong></td><td><span class="badge no">nem</span></td></tr>
+            <tr><td><code>filter(fn)</code></td><td>Megtartja azokat, amikre a <code>fn</code> truthy</td><td>új tömb (rövidebb vagy egyenlő)</td><td><span class="badge no">nem</span></td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout tip"><strong>Jegyezd meg</strong>
+          <p>Gyorsszabály: a <em>tömb szerkezetét</em> változtató műveletek (hozzáadás, törlés, sorrend) módosítanak; a <em>kérdező / másoló / átalakító</em> műveletek nem. A kivétel-feeling a <code>sort</code> és <code>reverse</code>: ezek módosítanak, <em>és</em> visszaadják ugyanazt a tömböt.</p></div>
+      </article>
+
+      <article class="topic" id="t-spread" data-title="Spread és destrukturálás (tömb)">
+        <h3>Spread operátor (<code>...</code>) és destrukturálás tömbökkel</h3>
+        <p>A <strong>spread</strong> „kiteríti” a tömb elemeit: másoláshoz, összefűzéshez, függvényhíváshoz. A <strong>destrukturálás</strong> a tömb elemeit egyszerre, névvel látja el változókba.</p>
+        <script type="text/plain" data-code data-run>
+const a = [1, 2], b = [3, 4];
+
+// spread
+const egyben = [...a, ...b, 5];          // összefűzés + új elem
+console.log(egyben);
+const masolat = [...a];                  // másolat
+masolat.push(99);
+console.log(a, masolat);                 // az "a" érintetlen
+console.log(Math.max(...egyben));        // a tömb elemei külön paraméterként
+
+// destrukturálás
+const [elso, masodik, ...tobbi] = egyben;   // ...tobbi = a maradék (rest)
+console.log(elso, masodik, tobbi);
+
+const [x, , z = 10, w = "alap"] = [1, 2, 3];   // üres hely = kihagyás; = alapértelmezett érték
+console.log(x, z, w);
+
+// két változó cseréje
+let p = 1, q = 2;
+[p, q] = [q, p];
+console.log(p, q);                       // 2 1
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>A spread csak <strong>sekély</strong> (shallow) másolatot készít: a belső tömbök / objektumok továbbra is közösek maradnak.</p></div>
+        <script type="text/plain" data-code data-run>
+const beagyazott = [[1]];
+const sekely = [...beagyazott];
+sekely[0].push(2);                       // a belső tömböt közösen használják
+console.log(beagyazott);                 // [[1, 2]] – az eredeti is változott!
+
+const mely = structuredClone(beagyazott);   // mély másolat
+mely[0].push(3);
+console.log(beagyazott, mely);
+        </script>
+      </article>
+
+      <article class="topic" id="t-set" data-title="Set">
+        <h3>Set</h3>
+        <p>A <code>Set</code> <strong>egyedi értékek gyűjteménye</strong>: ugyanaz az érték csak egyszer szerepelhet benne, a beszúrási sorrendet megőrzi. Akkor használd, ha ismétlődés-mentesség kell, vagy gyorsan akarod ellenőrizni, benne van-e valami (<code>has</code>).</p>
+        <p>Metódusok: <code>add(x)</code> hozzáad, <code>has(x)</code> megnézi, <code>delete(x)</code> töröl, <code>clear()</code> mindent töröl, és a <code>size</code> a méret (tulajdonság, nem függvény!).</p>
+        <script type="text/plain" data-code data-run>
+const s = new Set([1, 2, 2, 3]);      // a duplikált 2 eltűnik
+s.add(4);
+s.add(2);                             // már benne van – nem történik semmi
+console.log(s, s.size);               // Set(4) {1, 2, 3, 4} 4
+
+console.log(s.has(3), s.has(10));     // true false
+s.delete(1);
+console.log(s);
+
+for (const elem of s) console.log("elem:", elem);   // bejárás for...of-fal
+
+s.clear();
+console.log(s.size);                  // 0
+        </script>
+        <h4>Példa: duplikátumok kiszűrése egy tömbből</h4>
+        <script type="text/plain" data-code data-run>
+const duplikalt = [1, 2, 2, 3, 3, 3, "a", "a"];
+const egyedi = [...new Set(duplikalt)];            // Set → vissza tömbbé a spreaddel
+console.log(egyedi);
+console.log(Array.from(new Set(duplikalt)));       // ugyanez Array.from-mal
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>A Set <strong>nem indexelhető</strong> (<code>s[0]</code> → <code>undefined</code>), és nincs <code>.length</code>, csak <code>.size</code>. Objektumoknál a <strong>hivatkozás</strong> számít, így két azonos tartalmú objektum is külön elemnek számít:</p></div>
+        <script type="text/plain" data-code data-run>
+console.log(new Set([{ a: 1 }, { a: 1 }]).size);   // 2 – két külön objektum
+const o = { a: 1 };
+console.log(new Set([o, o]).size);                 // 1 – ugyanaz a hivatkozás
+console.log(new Set([1, 2])[0]);                   // undefined
+        </script>
+      </article>
+
+      <article class="topic" id="t-map" data-title="Map">
+        <h3>Map</h3>
+        <p>A <code>Map</code> <strong>kulcs–érték párok gyűjteménye</strong>, mint egy szótár. Az objektummal ellentétben a kulcs <strong>bármilyen típusú</strong> lehet (szám, objektum, függvény is), a beszúrási sorrendet megőrzi, és a mérete közvetlenül lekérdezhető.</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Szempont</th><th><code>Map</code></th><th><code>Object</code></th></tr></thead>
+          <tbody>
+            <tr><td>Kulcs típusa</td><td>bármi (szám, objektum, bool…)</td><td>csak string vagy symbol (a számok is szöveggé alakulnak)</td></tr>
+            <tr><td>Méret</td><td><code>m.size</code></td><td><code>Object.keys(o).length</code></td></tr>
+            <tr><td>Bejárási sorrend</td><td>mindig beszúrási sorrend</td><td>többnyire, de számszerű kulcsok előre kerülnek</td></tr>
+            <tr><td>Alapból van kulcsa?</td><td>nem, üresen indul</td><td>örökölt kulcsok (pl. <code>toString</code>) ütközhetnek</td></tr>
+            <tr><td>Közvetlen bejárás</td><td><code>for...of</code>-fal</td><td>csak <code>Object.entries()</code> vagy <code>for...in</code>-nel</td></tr>
+            <tr><td>Gyakori hozzáadás / törlés</td><td>erre optimalizált</td><td>kevésbé hatékony</td></tr>
+            <tr><td>JSON-ba alakítás</td><td>nincs közvetlenül</td><td>közvetlenül (<code>JSON.stringify</code>)</td></tr>
+          </tbody>
+        </table></div>
+        <p>Metódusok: <code>set(k, v)</code> (láncolható), <code>get(k)</code>, <code>has(k)</code>, <code>delete(k)</code>, <code>clear()</code>, <code>size</code>. Bejárás: <code>for...of</code> (<code>[kulcs, érték]</code> párok), <code>keys()</code>, <code>values()</code>, <code>entries()</code>.</p>
+        <script type="text/plain" data-code data-run>
+const m = new Map();
+m.set("alma", 3).set("körte", 5);     // a set() visszaadja a Map-et, így láncolható
+m.set(42, "szám a kulcs");
+m.set(true, "bool a kulcs");
+
+console.log(m.get("alma"), m.get(42), m.get("nincs"));   // 3 "szám a kulcs" undefined
+console.log(m.has("körte"), m.size);
+m.delete(true);
+console.log(m);
+
+// bejárás
+for (const [kulcs, ertek] of m) console.log(kulcs, "→", ertek);
+console.log([...m.keys()]);
+console.log([...m.values()]);
+for (const [k, v] of m.entries()) console.log("entries:", k, v);
+m.forEach((ertek, kulcs) => console.log("forEach:", kulcs, ertek));   // figyelem: előbb az érték, aztán a kulcs
+
+// átalakítás
+const obj = { a: 1, b: 2 };
+const objbolMap = new Map(Object.entries(obj));
+console.log(objbolMap, Object.fromEntries(objbolMap));
+
+m.clear();
+console.log(m.size);
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>A <code>m["kulcs"] = 1</code> <strong>nem</strong> Map-bejegyzést hoz létre (csak sima tulajdonságot a Map objektumon)! Mindig <code>set</code>/<code>get</code>. Objektum-kulcsoknál is hivatkozás szerint keres.</p></div>
+        <script type="text/plain" data-code data-run>
+const m2 = new Map();
+m2["x"] = 1;                          // ROSSZ – nem Map-adat
+console.log(m2.size, m2.get("x"));    // 0 undefined
+
+const kulcsObj = { id: 1 };
+m2.set(kulcsObj, "adat");
+console.log(m2.get(kulcsObj), m2.get({ id: 1 }));   // "adat" undefined
+        </script>
+      </article>
+
+      <article class="topic" id="t-object" data-title="Object">
+        <h3>Object</h3>
+        <p>Az objektum <strong>névvel ellátott tulajdonságok (kulcs–érték párok)</strong> gyűjteménye. Egy dolog (pl. diák, autó) adatait és viselkedését fogja össze.</p>
+        <h4>Létrehozás, elérés, módosítás, törlés</h4>
+        <script type="text/plain" data-code data-run>
+const diak = { nev: "Anna", kor: 17, "kedvenc tantárgy": "informatika" };   // literál
+
+// elérés: ponttal vagy szögletes zárójellel
+console.log(diak.nev);
+console.log(diak["nev"]);
+console.log(diak["kedvenc tantárgy"]);   // szóközös kulcshoz csak [] jó
+const kulcs = "kor";
+console.log(diak[kulcs]);                // dinamikus kulcshoz is [] kell
+
+diak.kor = 18;                           // módosítás
+diak.osztaly = "11.B";                   // hozzáadás
+delete diak.nev;                         // törlés
+console.log(diak);
+
+console.log("kor" in diak, diak.hasOwnProperty("nev"));   // true false
+console.log(diak.nincsIlyen);            // undefined – nem hiba
+        </script>
+        <h4><code>Object.keys()</code>, <code>values()</code>, <code>entries()</code> és bejárás</h4>
+        <script type="text/plain" data-code data-run>
+const auto = { marka: "Opel", ev: 2010, szin: "kék" };
+
+console.log(Object.keys(auto));      // kulcsok tömbje
+console.log(Object.values(auto));    // értékek tömbje
+console.log(Object.entries(auto));   // [kulcs, érték] párok tömbje
+
+for (const [k, v] of Object.entries(auto)) console.log(k + ": " + v);   // javasolt bejárás
+for (const k in auto) console.log("for...in:", k);                       // kulcsokra működik
+
+Object.keys(auto).forEach(k => console.log(k.toUpperCase()));            // tömbmetódusok is jók
+        </script>
+        <h4>Destrukturálás és spread objektumokkal</h4>
+        <script type="text/plain" data-code data-run>
+const auto = { marka: "Opel", ev: 2010, szin: "kék" };
+
+// destrukturálás: a tulajdonságnevek számítanak, nem a sorrend
+const { marka, ev } = auto;
+const { szin: szinNev, ar = 1000 } = auto;    // átnevezés ( : ) és alapértelmezett érték ( = )
+console.log(marka, ev, szinNev, ar);
+
+// spread: másolás és módosított másolat
+const masolat = { ...auto };
+const ujabb = { ...auto, ev: 2020, extra: true };   // a későbbi felülírja a korábbit
+console.log(masolat, ujabb);
+console.log(auto);                                   // az eredeti változatlan
+
+// rövidített tulajdonság: { nev } = { nev: nev }
+const nev = "Béla", kor = 30;
+console.log({ nev, kor });
+
+// függvény paraméterében is destrukturálhatsz
+function kiir({ marka, szin }) { return marka + " (" + szin + ")"; }
+console.log(kiir(auto));
+        </script>
+        <h4>Metódus az objektumban és a <code>this</code> alapjai</h4>
+        <p>Ha egy tulajdonság értéke függvény, az <strong>metódus</strong>. A metóduson belül a <code>this</code> arra az objektumra mutat, amelyiken keresztül <em>meghívták</em> (a pont előtti rész).</p>
+        <script type="text/plain" data-code data-run>
+const kutya = {
+  nev: "Morzsi",
+  kor: 3,
+  ugat() {                                  // rövidített metódus-írásmód
+    return this.nev + " azt mondja: vau!";  // this = kutya
+  },
+  evesIdo: function () { return this.kor * 7; }   // hagyományos írásmód
+};
+console.log(kutya.ugat());
+console.log(kutya.evesIdo());
+
+const masik = { nev: "Bodri", ugat: kutya.ugat };
+console.log(masik.ugat());     // this = masik → "Bodri azt mondja..."
+
+const kiszedett = kutya.ugat;  // leválasztjuk az objektumról
+try { console.log(kiszedett()); }   // a pont előtti rész hiányzik: a this elveszik
+catch (e) { console.log(e.name); }
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>A <code>this</code> értékét <strong>a hívás módja</strong> dönti el, nem az, hol írtad meg a függvényt. Ha a metódust kivezeted az objektumból, a <code>this</code> elveszik. A <code>const</code> objektum tulajdonságai módosíthatók, az objektum befagyasztásához <code>Object.freeze()</code> kell. A <code>delete</code> tulajdonságot töröl, nem változót.</p></div>
+      </article>
+    </section>
+
+    <!-- ================= 2.4 FÜGGVÉNYEK ================= -->
+    <section class="chapter" id="c4">
+      <header class="chapter-head">
+        <span class="num">2.4</span>
+        <div><h2>Függvény létrehozási lehetőségek</h2><p>Négy írásmód, paraméterek, visszatérési érték és a <code>this</code>.</p></div>
+      </header>
+
+      <article class="topic" id="t-fn-forms" data-title="Függvények létrehozása">
+        <h3>Négy mód függvény létrehozására</h3>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Forma</th><th>Hoisting</th><th>Saját <code>this</code></th><th>Mikor használd</th></tr></thead>
+          <tbody>
+            <tr><td>Függvénydeklaráció</td><td>igen: a definíció előtt is hívható</td><td>igen</td><td>önálló, névvel ellátott segédfüggvény</td></tr>
+            <tr><td>Függvénykifejezés</td><td>nem (a változó szabályai szerint)</td><td>igen</td><td>függvény értékként, változóban</td></tr>
+            <tr><td>Nyílfüggvény</td><td>nem</td><td>nincs: a környezetéét használja</td><td>callbackek, rövid függvények</td></tr>
+            <tr><td>Metódus objektumban</td><td>nem</td><td>igen (az objektum)</td><td>az objektumhoz tartozó viselkedés</td></tr>
+          </tbody>
+        </table></div>
+        <h4>1. Függvénydeklaráció</h4>
+        <script type="text/plain" data-code data-run>
+console.log(osszeg(2, 3));            // 5 – működik, mert a deklaráció "felemelődik" (hoisting)
+
+function osszeg(a, b) {
+  return a + b;
+}
+        </script>
+        <h4>2. Függvénykifejezés</h4>
+        <p>A függvény <strong>érték</strong>, amit egy változóba teszünk. Csak az értékadás után hívható.</p>
+        <script type="text/plain" data-code data-run>
+const osszeg = function (a, b) {
+  return a + b;
+};
+console.log(osszeg(2, 3));
+
+try { console.log(kesobb(1, 2)); }    // még nem létezik a változó értéke
+catch (e) { console.log(e.name); }    // ReferenceError (TDZ)
+const kesobb = function (a, b) { return a + b; };
+        </script>
+        <h4>3. Nyílfüggvény (arrow function) és rövidített írásmódok</h4>
+        <script type="text/plain" data-code data-run>
+const osszeg  = (a, b) => a + b;          // egysoros: a kifejezés értéke automatikusan visszatér (implicit return)
+const negyzet = x => x * x;               // egy paraméternél a zárójel elhagyható
+const koszon  = () => "Szia!";            // paraméter nélkül: üres zárójel kell
+const tobbsoros = (a, b) => {             // { } esetén kell a return
+  const s = a + b;
+  return s * 2;
+};
+const objVissza = n => ({ nev: n });      // objektum visszaadása: kerek zárójel kell köré!
+
+console.log(osszeg(2, 3), negyzet(4), koszon(), tobbsoros(1, 2), objVissza("Anna"));
+
+console.log([1, 2, 3].map(x => x * 10));  // tipikus használat: callback
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>Nyílfüggvénynél a <code>=&gt; { nev: n }</code> blokk-törzsnek számít (a <code>nev:</code> címke lesz), ezért <code>undefined</code>-ot ad. Objektumot csak <code>=&gt; ({ nev: n })</code> alakban adhatsz vissza. A nyílfüggvénynek nincs saját <code>arguments</code>-e, és <code>new</code>-val nem hívható.</p></div>
+        <script type="text/plain" data-code data-run>
+const rossz = n => { nev: n };            // blokk, nem objektum
+const jo    = n => ({ nev: n });
+console.log(rossz("x"), jo("x"));         // undefined { nev: 'x' }
+        </script>
+        <h4>4. Metódus objektumban</h4>
+        <script type="text/plain" data-code data-run>
+const szamologep = {
+  ertek: 10,
+  hozzaad(n) {                      // rövidített metódus-szintaxis
+    this.ertek += n;
+    return this;                    // visszaadjuk az objektumot → láncolható
+  },
+  kiir: function () {               // hagyományos forma
+    return "Érték: " + this.ertek;
+  }
+};
+console.log(szamologep.hozzaad(5).hozzaad(2).kiir());   // Érték: 17
+        </script>
+      </article>
+
+      <article class="topic" id="t-fn-params" data-title="Paraméterek és return">
+        <h3>Paraméterek és <code>return</code></h3>
+        <ul>
+          <li><strong>Alapértelmezett érték</strong>: <code>function f(a, b = 10)</code>. Akkor lép életbe, ha a paraméter hiányzik vagy <code>undefined</code>.</li>
+          <li><strong>Rest paraméter</strong> (<code>...args</code>): a maradék argumentumokat <strong>egy tömbbe</strong> gyűjti, és mindig az utolsó paraméter.</li>
+          <li><strong><code>return</code></strong>: visszaadja az értéket, és <strong>azonnal kilép</strong> a függvényből. Ha nincs <code>return</code> (vagy üres), a függvény <code>undefined</code>-ot ad.</li>
+        </ul>
+        <script type="text/plain" data-code data-run>
+function koszon(nev = "vendég", udv = "Szia") {
+  return `${udv}, ${nev}!`;
+}
+console.log(koszon());                    // Szia, vendég!
+console.log(koszon("Anna"));
+console.log(koszon("Béla", "Hello"));
+console.log(koszon(undefined, "Hali"));   // az undefined az alapértéket aktiválja
+console.log(koszon(null));                // a null NEM – "Szia, null!"
+
+// rest paraméter
+function osszes(...szamok) {              // szamok egy valódi tömb
+  let s = 0;
+  for (const n of szamok) s += n;
+  return s;
+}
+console.log(osszes(1, 2, 3, 4));
+console.log(osszes());                    // 0
+
+function elsoEsTobbi(elso, ...tobbi) { return [elso, tobbi]; }
+console.log(elsoEsTobbi(1, 2, 3));
+
+const lista = [5, 6, 7];
+console.log(osszes(...lista));            // spread a hívásnál: kiteríti a tömböt
+        </script>
+        <h4>Mit ad vissza, ha nincs <code>return</code>?</h4>
+        <script type="text/plain" data-code data-run>
+function nincsReturn() {
+  const x = 1;                // számol valamit, de nem ad vissza semmit
+}
+console.log(nincsReturn());   // undefined
+
+function korai(x) {
+  if (x < 0) return;          // üres return → undefined, és kilép
+  return Math.sqrt(x);
+}
+console.log(korai(-1), korai(16));
+
+console.log(((a, b) => a + b)(1));     // hiányzó paraméter = undefined → 1 + undefined = NaN
+        </script>
+        <div class="callout warn"><strong>Buktató</strong>
+          <p>A <code>return</code> <strong>után közvetlenül sort törni</strong> nem szabad: a JS pontosvesszőt képzel mögé, és <code>undefined</code>-ot ad vissza. Az argumentumok számát a JS nem ellenőrzi: a felesleges eldobódik, a hiányzó <code>undefined</code> lesz.</p></div>
+        <script type="text/plain" data-code data-run>
+function rossz() {
+  return
+    42;                   // a JS ide automatikusan pontosvesszőt tesz
+}
+function jo() {
+  return 42;
+}
+console.log(rossz(), jo());   // undefined 42
+        </script>
+      </article>
+
+      <article class="topic" id="t-fn-this" data-title="Nyílfüggvény és this">
+        <h3>Nyílfüggvény és hagyományos függvény: a <code>this</code> (alapszint)</h3>
+        <p>A <strong>hagyományos</strong> függvénynek <strong>saját <code>this</code>-e</strong> van, amit a <em>hívás módja</em> határoz meg (objektum metódusnál az objektum, önálló híváskor nem az objektum). A <strong>nyílfüggvénynek nincs saját <code>this</code>-e</strong>: azt a környezetből <em>örökli</em>, ahol <strong>létrejött</strong>.</p>
+        <script type="text/plain" data-code data-run>
+const o = {
+  nev: "Objektum",
+
+  regularis() {                          // hagyományos metódus
+    return this.nev;                     // this = o
+  },
+
+  nyil: () => this === o,                // nyílfüggvény: a külső this-t örökli, NEM az o-t
+
+  belso() {
+    const regBelso  = function () { return this === o; };  // saját this → nem az o
+    const nyilBelso = () => this === o;                    // a belso() this-ét örökli → az o
+    return [regBelso(), nyilBelso()];
+  }
+};
+
+console.log(o.regularis());   // "Objektum"
+console.log(o.nyil());        // false
+console.log(o.belso());       // [false, true]
+        </script>
+        <div class="callout tip"><strong>Jegyezd meg</strong>
+          <ul>
+            <li><strong>Objektum metódusa</strong> → hagyományos függvény vagy rövidített metódus (<code>nev() { }</code>), hogy legyen <code>this</code>.</li>
+            <li><strong>Callback / belső függvény</strong>, ami a külső <code>this</code>-t akarja használni → <strong>nyílfüggvény</strong>.</li>
+            <li>Objektum-metódusnak <strong>ne</strong> írj nyílfüggvényt (<code>nev: () =&gt; this.x</code> nem az objektumot látja).</li>
+          </ul></div>
+      </article>
+    </section>
+
+    <!-- ================= ÖNELLENŐRZŐ KÉRDÉSEK ================= -->
+    <section class="chapter" id="kerdesek">
+      <header class="chapter-head">
+        <span class="num">?</span>
+        <div><h2>Önellenőrző kérdések</h2><p>Előbb válaszolj fejben vagy papíron, aztán nyisd ki a választ.</p></div>
+      </header>
+
+      <details class="q">
+        <summary><span class="n">1</span>Mi a különbség a <code>let</code> és a <code>const</code> között?</summary>
+        <div class="ans">
+          <p>Mindkettő <strong>blokk hatókörű</strong>, ugyanabban a hatókörben nem deklarálható újra, és a deklaráció előtt nem használható (TDZ). A különbség: a <code>let</code> változónak <strong>később új értéket adhatunk</strong>, a <code>const</code>-nak <strong>nem</strong> (<code>TypeError</code>), és a <code>const</code>-ot <strong>kötelező inicializálni</strong> a deklarációnál.</p>
+          <p>Fontos: a <code>const</code> a <em>változó kötését</em> rögzíti, nem az értéket. Ha objektumot vagy tömböt tárol, annak tartalma módosítható.</p>
+          <script type="text/plain" data-code data-run>
+let a = 1;  a = 2;                         // rendben
+const b = [1];  b.push(2);                 // rendben – a tömb tartalma változhat
+try { b = [9]; } catch (e) { console.log(e.name); }   // TypeError – új hivatkozás nem adható
+console.log(a, b);
+          </script>
+        </div>
+      </details>
+
+      <details class="q">
+        <summary><span class="n">2</span>Mit ad vissza a <code>typeof null</code>, és miért furcsa ez?</summary>
+        <div class="ans">
+          <p><code>"object"</code>-et ad. Furcsa, mert a <code>null</code> <strong>primitív érték</strong> („nincs érték”), nem objektum. Ez a nyelv első verziójából származó <strong>történelmi hiba</strong>, amit a meglévő weboldalak működése miatt sosem javítottak ki.</p>
+          <p>Ezért <code>null</code>-ra a <code>typeof</code> helyett <code>x === null</code> kell, objektumot pedig így ellenőrizz: <code>x !== null &amp;&amp; typeof x === "object"</code>.</p>
+          <script type="text/plain" data-code data-run>
+console.log(typeof null);                 // "object"
+const x = null;
+console.log(x === null);                  // true – ez a helyes vizsgálat
+console.log(x !== null && typeof x === "object");   // false – valódi objektum-ellenőrzés
+          </script>
+        </div>
+      </details>
+
+      <details class="q">
+        <summary><span class="n">3</span>Mikor használnál <code>for...of</code>, és mikor <code>for...in</code> ciklust?</summary>
+        <div class="ans">
+          <p><strong><code>for...of</code></strong>: ha az <strong>értékeket</strong> akarom bejárni egy iterálható dolgon: tömb, string, Set, Map. Tömbhöz ez az alapértelmezett választás.</p>
+          <p><strong><code>for...in</code></strong>: ha egy <strong>objektum kulcsait</strong> (tulajdonságneveit) akarom bejárni. Tömbre nem ajánlott, mert az indexeket szövegként adja, az örökölt tulajdonságokat is végigjárja, és a sorrend nem garantált.</p>
+          <script type="text/plain" data-code data-run>
+for (const v of ["a", "b"]) console.log("of:", v);            // értékek
+for (const k in { x: 1, y: 2 }) console.log("in:", k);         // kulcsok
+          </script>
+        </div>
+      </details>
+
+      <details class="q">
+        <summary><span class="n">4</span>Mi a különbség a <code>map</code> és a <code>forEach</code> között?</summary>
+        <div class="ans">
+          <p>Mindkettő minden elemre meghívja a callbacket, de a <strong>visszatérési értékük</strong> más: a <code>map</code> a callback eredményeiből <strong>új, ugyanolyan hosszú tömböt</strong> ad vissza (átalakításra való), a <code>forEach</code> <strong><code>undefined</code>-ot</strong> ad (mellékhatásra való: kiírás, külső változó módosítása). A <code>map</code> láncolható, a <code>forEach</code> nem.</p>
+          <script type="text/plain" data-code data-run>
+const szamok = [1, 2, 3];
+const m = szamok.map(x => x * 2);
+const f = szamok.forEach(x => x * 2);
+console.log(m);   // [2, 4, 6]
+console.log(f);   // undefined
+          </script>
+        </div>
+      </details>
+
+      <details class="q">
+        <summary><span class="n">5</span>Hogyan szűrnéd ki egy tömbből az ismétlődő elemeket egyetlen sorban?</summary>
+        <div class="ans">
+          <p>A <code>Set</code> csak egyedi értékeket tárol, ezért a tömbből Set-et, abból pedig a spread operátorral újra tömböt készítünk:</p>
+          <script type="text/plain" data-code data-run>
+const tomb = [1, 2, 2, 3, 3, 3, 4];
+const egyedi = [...new Set(tomb)];          // egysoros megoldás
+console.log(egyedi);                        // [1, 2, 3, 4]
+console.log(Array.from(new Set(tomb)));     // ugyanez Array.from-mal
+          </script>
+        </div>
+      </details>
+
+      <details class="q">
+        <summary><span class="n">6</span>Mikor választanál Map-et Object helyett?</summary>
+        <div class="ans">
+          <p><strong>Map-et</strong>, ha:</p>
+          <ul>
+            <li>a kulcsok <strong>nem szövegek</strong> (szám, objektum, bármi),</li>
+            <li><strong>gyakran</strong> adsz hozzá / törölsz elemeket, vagyis szótárként, gyorsítótárként használod,</li>
+            <li>számít a <strong>beszúrási sorrend</strong> és a méret gyors lekérdezése (<code>size</code>),</li>
+            <li>nem akarsz ütközést az örökölt kulcsokkal (<code>toString</code> stb.), vagy a kulcsok előre <strong>nem ismertek</strong>.</li>
+          </ul>
+          <p><strong>Objektumot</strong>, ha <strong>rögzített szerkezetű rekordot</strong> írsz le (pl. egy diák adatai ismert mezőkkel), JSON-nal dolgozol, vagy a destrukturálás, <code>.</code> jelölés kényelme fontos.</p>
+          <script type="text/plain" data-code data-run>
+const gyorsitotar = new Map();
+const kulcs = { id: 7 };                      // objektum kulcs – Object-nél "[object Object]" lenne
+gyorsitotar.set(kulcs, "mentett adat");
+console.log(gyorsitotar.get(kulcs), gyorsitotar.size);
+
+const o = {};
+o[{ id: 7 }] = "x";
+console.log(Object.keys(o));                  // [ '[object Object]' ] – a kulcs szöveggé alakult
+          </script>
+        </div>
+      </details>
+
+      <p class="final">Sok sikert a dolgozathoz! 🍀 Ha egy példa nem megy, írd át a kódot, és nézd meg a kimenetet, a kísérletezés a legjobb tanulás.</p>
+    </section>
+  </main>
+</div>
+</body>
+</html>
