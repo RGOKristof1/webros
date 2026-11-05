@@ -37,7 +37,7 @@
       <h1>JavaScript <mark>alapok</mark></h1>
       <p class="sub">Egyetlen oldal, amit a dolgozat előtt elég átolvasni: rövid magyarázat, működő kód, tipikus hibák és kidolgozott önellenőrző kérdések.</p>
       <div class="stats">
-        <div class="stat"><b>4</b><span>témakör</span></div>
+        <div class="stat"><b>5</b><span>témakör</span></div>
         <div class="stat"><b id="statTopics">–</b><span>téma</span></div>
         <div class="stat"><b id="statCode">–</b><span>futtatható példa</span></div>
         <div class="stat"><b>6</b><span>önellenőrző kérdés</span></div>
@@ -1126,6 +1126,180 @@ console.log(o.belso());       // [false, true]
             <li><strong>Callback / belső függvény</strong>, ami a külső <code>this</code>-t akarja használni → <strong>nyílfüggvény</strong>.</li>
             <li>Objektum-metódusnak <strong>ne</strong> írj nyílfüggvényt (<code>nev: () =&gt; this.x</code> nem az objektumot látja).</li>
           </ul></div>
+      </article>
+    </section>
+
+    <!-- ================= MEGOLDÁS: GYAKORLATI DOLGOZAT ================= -->
+    <section class="chapter" id="c5">
+      <header class="chapter-head">
+        <span class="num">M</span>
+        <div><h2>Gyakorlati dolgozat – megoldás</h2><p>Mind az 5 feladat kidolgozva, futtatható kóddal. Előbb próbáld meg magad, aztán hasonlítsd össze.</p></div>
+      </header>
+
+      <article class="topic" id="m-1" data-title="1. Jegyszámító (8 pont)">
+        <h3>1. feladat: jegyszámító, hibakezelés</h3>
+        <p>Három dolgot kell tudni: az <code>if / else if / else</code> sorrendet (alulról felfelé a határok), az érvénytelen bemenet kiszűrését <code>throw</code>-val <em>a függvény elején</em>, és a <code>try...catch</code>-et a híváskor.</p>
+        <script type="text/plain" data-code data-run>
+function jegy(pontszam) {
+  // 2. pont: előbb a hibás bemenet (nem szám, vagy 0–100 kívül)
+  if (typeof pontszam !== "number" || Number.isNaN(pontszam) || pontszam < 0 || pontszam > 100) {
+    throw new Error("Érvénytelen pontszám");
+  }
+  // 1. pont: érdemjegy
+  if (pontszam <= 49) return 1;
+  else if (pontszam <= 59) return 2;
+  else if (pontszam <= 74) return 3;
+  else if (pontszam <= 89) return 4;
+  else return 5;
+}
+
+// 3. pont: try...catch
+for (const p of [82, 45, 120]) {
+  try {
+    console.log(p, "→", jegy(p));
+  } catch (e) {
+    console.log(p, "→ hiba:", e.message);
+  }
+}
+
+// 4. pont: ternáris (határ: 2-es jegy)
+const megfeleles = jegy(82) >= 2 ? "Megfelelt" : "Nem felelt meg";
+console.log(megfeleles);
+        </script>
+        <div class="callout tip"><strong>Pontszerző részletek</strong>
+          <p>A <code>typeof</code> ellenőrzés kell, mert pl. <code>"abc" &lt; 0</code> hamis lenne, és hiba nélkül átcsúszna. A <code>NaN</code> típusa is <code>number</code>, ezért kell mellé a <code>Number.isNaN</code>. A <code>throw</code> miatt az <code>else</code> sem kell a hibaág után, mert a függvény kilép.</p></div>
+      </article>
+
+      <article class="topic" id="m-2" data-title="2. Ciklusok (7 pont)">
+        <h3>2. feladat: ciklusok</h3>
+        <script type="text/plain" data-code data-run>
+// 1. pont: 3-mal osztható, de az 5-tel osztható kimarad
+for (let i = 1; i <= 30; i++) {
+  if (i % 5 === 0) continue;     // 15 és 30 kimarad
+  if (i % 3 === 0) console.log(i);
+}
+
+// 2. pont: összeadjuk 1-től, amíg az összeg nem lesz > 100
+let osszeg = 0;
+let db = 0;
+let szam = 1;
+while (osszeg <= 100) {
+  osszeg += szam;
+  szam++;
+  db++;
+}
+console.log("Darab:", db, "Összeg:", osszeg);   // 14 és 105
+        </script>
+        <div class="callout tip"><strong>Jegyezd meg</strong>
+          <p>A <code>while</code> feltétele <code>osszeg &lt;= 100</code> (addig megy, amíg <em>nem haladta meg</em> a 100-at). Az 1+…+13 = 91 még kevés, a 14. szám után lesz 105. A <code>continue</code> a <em>következő körre</em> ugrik, nem lép ki.</p></div>
+      </article>
+
+      <article class="topic" id="m-3" data-title="3. Tömbök (12 pont)">
+        <h3>3. feladat: tömbök</h3>
+        <script type="text/plain" data-code data-run>
+const jegyek = [4, 5, 2, 5, 3, 1, 4, 5, 2];
+
+// 1. átlag (for...of) – két tizedesre
+let ossz = 0;
+for (const j of jegyek) ossz += j;
+console.log("Átlag:", (ossz / jegyek.length).toFixed(2));   // 3.44
+
+// 2. filter: 3-asnál jobb
+console.log(jegyek.filter(j => j > 3));
+
+// 3. map: "Jegy: 4" formátum
+console.log(jegyek.map(j => "Jegy: " + j));
+
+// 4. Set: egyedi, növekvő
+const egyedi = [...new Set(jegyek)].sort((a, b) => a - b);
+console.log(egyedi);                                       // [1, 2, 3, 4, 5]
+
+// 5. slice: az eredeti nem változik
+console.log(jegyek.slice(0, 3));
+console.log(jegyek);
+
+// 6. includes
+console.log(jegyek.includes(1) ? "Van bukás" : "Nincs bukás");
+        </script>
+        <div class="callout warn"><strong>Buktatók</strong>
+          <p>A <code>toFixed(2)</code> <strong>szöveget</strong> ad vissza. A <code>sort()</code> összehasonlító függvény nélkül szövegként rendez, ezért kell az <code>(a, b) =&gt; a - b</code>. A <code>slice</code> másol, a <code>splice</code> módosítana.</p></div>
+      </article>
+
+      <article class="topic" id="m-4" data-title="4. Objektumok és Map (12 pont)">
+        <h3>4. feladat: objektumok és Map</h3>
+        <script type="text/plain" data-code data-run>
+const tanulok = [
+  { nev: "Anna",   osztaly: "10.A", jegyek: [5, 4, 5] },
+  { nev: "Bence",  osztaly: "10.B", jegyek: [3, 4, 2] },
+  { nev: "Csilla", osztaly: "10.A", jegyek: [5, 5, 4] },
+  { nev: "Dávid",  osztaly: "10.B", jegyek: [2, 3, 3] },
+  { nev: "Emma",   osztaly: "10.A", jegyek: [4, 4, 5] }
+];
+
+// 1. for...of + destrukturálás
+for (const { nev, jegyek } of tanulok) {
+  const atlag = jegyek.reduce((s, x) => s + x, 0) / jegyek.length;
+  console.log(`${nev}: ${atlag.toFixed(2)}`);
+}
+
+// 2. Map: osztály → létszám
+const letszam = new Map();
+for (const { osztaly } of tanulok) {
+  letszam.set(osztaly, (letszam.get(osztaly) ?? 0) + 1);
+}
+for (const [osztaly, db] of letszam) {
+  console.log(`${osztaly}: ${db} fő`);
+}
+
+// 3. Object.entries
+for (const [kulcs, ertek] of Object.entries(tanulok[0])) {
+  console.log(`${kulcs}: ${ertek}`);
+}
+
+// 4. spread másolat új email tulajdonsággal
+const masolat = { ...tanulok[0], email: "anna@iskola.hu" };
+console.log(masolat);
+console.log(tanulok[0]);    // az eredetiben nincs email
+        </script>
+        <div class="callout tip"><strong>Jegyezd meg</strong>
+          <p>A Map-számlálás mintája: <code>m.set(k, (m.get(k) ?? 0) + 1)</code>. Ha a kulcs még nincs, a <code>get</code> <code>undefined</code>-ot ad, a <code>??</code> ilyenkor 0-t vesz. A destrukturálásnál a név legyen azonos a tulajdonság nevével (<code>nev</code>, <code>jegyek</code>).</p></div>
+      </article>
+
+      <article class="topic" id="m-5" data-title="5. Függvények (11 pont)">
+        <h3>5. feladat: függvények</h3>
+        <script type="text/plain" data-code data-run>
+// 1. nyílfüggvény rest paraméterrel
+const osszeg = (...szamok) => szamok.reduce((s, x) => s + x, 0);
+console.log(osszeg(1, 2, 3, 4), osszeg());      // 10 0
+
+// 2. függvénydeklaráció alapértelmezett paraméterrel
+function udvozol(nev = "Vendég") {
+  return `Szia, ${nev}!`;
+}
+console.log(udvozol("Péter"), udvozol());
+
+// 3. számláló objektum this-szel
+const szamlalo = {
+  ertek: 0,
+  novel() { this.ertek++; },
+  kiir()  { console.log("Érték:", this.ertek); }
+};
+szamlalo.novel();
+szamlalo.novel();
+szamlalo.novel();
+szamlalo.kiir();                                // 3
+
+// 4. mi lenne nyílfüggvénnyel?
+const rossz = {
+  ertek: 0,
+  novel: () => { this.ertek++; }                // this NEM a rossz objektum
+};
+try { rossz.novel(); } catch (e) { /* a külső this-en nincs ertek */ }
+console.log(rossz.ertek);                       // 0 – nem nőtt
+        </script>
+        <div class="callout tip"><strong>4. pont: a kommentbe írandó válasz</strong>
+          <p><em>A nyílfüggvénynek nincs saját <code>this</code>-e, azt abból a külső (lexikális) környezetből veszi, ahol létrejött. Az objektumliterál nem hoz létre ilyen környezetet, ezért a <code>this</code> nem a számláló objektumra mutat, így a <code>this.ertek</code> nem az objektum <code>ertek</code> tulajdonságát növeli.</em></p>
+          <p>Ezért objektum metódusának mindig hagyományos függvényt vagy rövidített metódust (<code>novel() { }</code>) írj.</p></div>
       </article>
     </section>
 
